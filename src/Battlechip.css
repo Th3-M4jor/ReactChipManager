@@ -1,0 +1,12 @@
+.Chip {
+    background-color: "#00637b";
+    text-align: "Left"; 
+    padding-left: "0px"; 
+    padding-right: "1px"; 
+    font-family: "Lucida Console";
+    font-weight:"bold"; 
+    font-size: "16px"; 
+    color: "white";
+    margin-bottom: "0px";
+    text-shadow:"1px 1px grey";
+}
