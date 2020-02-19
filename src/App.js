@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane } from 'mdbreact';
 import './App.css';
-import { loadChips, Battlechip, getChipDescription } from './battlechip';
+import {Packchip} from './battlechip';
+import {Library} from './Library';
+import {loadChips} from './ChipLibrary';
 
 /*
 function App() {
@@ -100,36 +102,51 @@ class App extends React.Component {
                 Pack
             </MDBNavLink>
             </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="#" active={this.state.activeTab === "3"} onClick={this.toggle("3")} role="tab">
+                Library
+            </MDBNavLink>
+            </MDBNavItem>
           </MDBNav>
           <MDBTabContent activeItem={this.state.activeTab}>
             <MDBTabPane tabId="0" role="tabpanel">
             <MDBContainer>
             <div style={{
-              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px",
+              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
               fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
             }}>
-              <Battlechip chipName="FireSword" />
-              <Battlechip chipName="TreeBomb"/>
+              <Packchip chipName="FireSword" />
+              <Packchip chipName="TreeBomb"/>
               </div>
             </MDBContainer>
             </MDBTabPane>
             <MDBTabPane tabId="1" role="tabpanel">
             <MDBContainer>
             <div style={{
-              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px",
+              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
               fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
             }}>
-              <Battlechip chipName="AquaSword" />
+              <Packchip chipName="AquaSword" />
               </div>
             </MDBContainer>
             </MDBTabPane>
             <MDBTabPane tabId="2" role="tabpanel">
             <MDBContainer>
             <div style={{
-              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px",
+              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
               fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
             }}>
-              <Battlechip chipName="ElecSword" />
+              <Packchip chipName="ElecSword" />
+              </div>
+            </MDBContainer>
+            </MDBTabPane>
+            <MDBTabPane tabId="3" role="tabpanel">
+            <MDBContainer>
+            <div style={{
+              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
+              fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
+            }}>
+              <Library />
               </div>
             </MDBContainer>
             </MDBTabPane>

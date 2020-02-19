@@ -1,73 +1,49 @@
 import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
-import {ElementImage} from "./ElementImage";
+import PropTypes from 'prop-types';
+import { ElementImage } from "./ElementImage";
+import { getChip } from "./ChipLibrary";
 import "./Battlechip.css"
 
-var library = new Map();
-const URL = "http://spartan364.hopto.org/chips.json";
 
-export async function loadChips() {
-    library.clear();
-    let body = await fetch(URL);
-    let result = await body.json();
-    result.forEach(chip => {
-        library.set(chip.Name.toLocaleLowerCase(), chip);
-    });
-    return true;
-}
 
-export class Battlechip extends React.Component {
+export class Packchip extends React.Component {
 
 
     render() {
         if (!this.props.chipName) {
             throw new Error("chipName not set");
         }
-        if (!library.has(this.props.chipName?.toLocaleLowerCase())) {
-            throw new Error("Bad chip name");
-        }
-        let chip = library.get(this.props.chipName.toLocaleLowerCase());
-        let skill;
-        if(chip.Skills.length > 1) {
-            skill = "Varies";
-        } else {
-            skill = chip.Skills[0];
-        }
+
+        let chip = getChip(this.props.chipName.toLocaleLowerCase());
         return (
             <MDBTooltip domElement>
-            <div>
-            <MDBRow>
-            <MDBCol>
                 <div className="Chip">
-                    {chip.Name}
+                    <MDBRow center>
+                        <MDBCol size="2">
+                            {chip.Name}
+                        </MDBCol>
+                        <MDBCol size="2">
+                            {chip.Skill}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            <ElementImage element={chip.Element} />
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Damage}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Range}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Hits}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Owned}
+                        </MDBCol>
+                    </MDBRow>
                 </div>
-            </MDBCol>
-            <MDBCol>
-                <div className="Chip">
-                {skill}
-                </div>
-            </MDBCol>
-            <MDBCol>
-                <ElementImage element={chip.Element}/>
-            </MDBCol>
-            <MDBCol>
-                <div className="Chip">
-                    {chip.Damage}
-                </div>
-            </MDBCol>
-            <MDBCol>
-                <div className="Chip">
-                    {chip.Range}
-                </div>
-            </MDBCol>
-            <MDBCol>
-                <div className="Chip">
-                    {chip.Hits}
-                </div>
-            </MDBCol>
-            </MDBRow>
-            </div>
-            <span>{chip.Description}</span>
+                <span>{chip.Description}</span>
             </MDBTooltip>
         );
     }
@@ -75,16 +51,51 @@ export class Battlechip extends React.Component {
 
 
 
-//style={{backgroundColor: "#00637b", textAlign: "Left", paddingLeft: "0px", paddingRight: "1px", fontFamily: "Lucida Console", fontWeight:"bold", fontSize: "16px", color: "white", marginBottom: "0px", textShadow:"1px 1px grey"}}
+export class LibraryChip extends React.Component {
 
 
-export function getChipDescription(chipName) {
-        if(!chipName) {
+    render() {
+        if (!this.props.chipName) {
             throw new Error("chipName not set");
         }
-        if (!library.has(chipName.toLocaleLowerCase())) {
-            throw new Error("Bad chip name");
-        }
-        let chip = library.get(chipName.toLocaleLowerCase());
-        return chip.Description;
+
+        let chip = getChip(this.props.chipName.toLocaleLowerCase());
+        return (
+            <MDBTooltip domElement>
+                <div className="Chip">
+                    <MDBRow center>
+                        <MDBCol size="2">
+                            {chip.Name}
+                        </MDBCol>
+                        <MDBCol size="2">
+                            {chip.Skill}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            <ElementImage element={chip.Element} />
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Damage}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            {chip.Range}
+                        </MDBCol>
+                        <MDBCol size="1">
+                                {chip.Hits}
+                        </MDBCol>
+                    </MDBRow>
+                </div>
+                <span>{chip.Description}</span>
+            </MDBTooltip>
+        );
+    }
 }
+
+
+/*
+Battlechip.PropTypes = {
+    chipName: PropTypes.string,
+}
+*/
+
+
+//style={{backgroundColor: "#00637b", textAlign: "Left", paddingLeft: "0px", paddingRight: "1px", fontFamily: "Lucida Console", fontWeight:"bold", fontSize: "16px", color: "white", marginBottom: "0px", textShadow:"1px 1px grey"}}

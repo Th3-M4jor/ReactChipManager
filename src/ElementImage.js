@@ -60,6 +60,10 @@ export class ElementImage extends React.Component {
                     throw new Error("bad element name");
             }
         });
-        return images;
+        return (
+        <div align="center">
+        {images}
+        </div>
+        )
     }
 }
