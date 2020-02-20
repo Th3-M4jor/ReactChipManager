@@ -9,7 +9,7 @@ const URL = "http://spartan364.hopto.org/chips.json";
  * @property {string[]} Skills
  * @property {string} Range
  * @property {string} Damage
- * @property {string} Type
+ * @property {("Standard"|"Mega"|"Giga")} Type
  * @property {string} Hits
  * @property {string} Description
  * @property {string} All
@@ -37,8 +37,6 @@ export class BattleChip {
         /** @private */this._hits = chipObj.Hits;
         /** @private */this._description = chipObj.Description;
         /** @private */this._all = chipObj.All;
-        this.Owned = 0;
-        this.Used = 0;
     }
 
     get Name() {
@@ -109,6 +107,9 @@ export function getChip(name) {
     return library.get(name.toLocaleLowerCase());
 }
 
+/**
+ * @returns {BattleChip[]} an array of all battlechips
+ */
 export function libraryAsArray() {
     return [...library.values()];
 }

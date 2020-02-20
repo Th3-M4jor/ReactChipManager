@@ -16,9 +16,22 @@ export class Packchip extends React.Component {
         }
 
         let chip = getChip(this.props.chipName.toLocaleLowerCase());
+        let type = "";
+        switch(chip.Type) {
+            case "Giga":
+                type = "Giga";
+                break;
+            case "Mega":
+                type = "Mega";
+                break;
+            case "Standard":
+            default:
+                type = "Chip";
+                break;
+        }
         return (
             <MDBTooltip domElement>
-                <div className="Chip">
+                <div className={type}>
                     <MDBRow center>
                         <MDBCol size="2">
                             {chip.Name}
@@ -39,7 +52,7 @@ export class Packchip extends React.Component {
                             {chip.Hits}
                         </MDBCol>
                         <MDBCol size="1">
-                            {chip.Owned}
+                            {this.props.chipCount}
                         </MDBCol>
                     </MDBRow>
                 </div>
@@ -55,14 +68,27 @@ export class LibraryChip extends React.Component {
 
 
     render() {
-        if (!this.props.chipName) {
-            throw new Error("chipName not set");
+        if (!this.props.chipName || !this.props.addToPackCallback) {
+            throw new Error("missing prop");
         }
 
         let chip = getChip(this.props.chipName.toLocaleLowerCase());
+        let type = "";
+        switch(chip.Type) {
+            case "Giga":
+                type = "#f8c8d8";
+                break;
+            case "Mega":
+                type = "#90f8f8";
+                break;
+            case "Standard":
+            default:
+                type = "white";
+                break;
+        }
         return (
             <MDBTooltip domElement>
-                <div className="Chip">
+                <div onDoubleClick={() => {this.props.addToPackCallback(chip.Name)}} style={{color: type}}>
                     <MDBRow center>
                         <MDBCol size="2">
                             {chip.Name}

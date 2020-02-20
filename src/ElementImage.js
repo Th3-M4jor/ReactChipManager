@@ -61,7 +61,7 @@ export class ElementImage extends React.Component {
             }
         });
         return (
-        <div align="center">
+        <div align="center" style={{minWidth:"50px"}}>
         {images}
         </div>
         )
