@@ -1,8 +1,8 @@
 .Chip {
-    background: #00637b;
+    background: transparent;
     text-align: Center; 
-    padding-left: 0px; 
-    padding-right: 0px; 
+    padding-left: -1px; 
+    padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight: bold; 
     font-size: 16px; 
@@ -12,10 +12,10 @@
 }
 
 .Mega {
-    background: #00637b;
+    background: transparent;
     text-align: Center; 
-    padding-left: 0px; 
-    padding-right: 0px; 
+    padding-left: -1px; 
+    padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight: bold; 
     font-size: 16px; 
@@ -25,10 +25,10 @@
 }
 
 .Giga {
-    background: #00637b;
-    text-align: Left; 
-    padding-left: 0px; 
-    padding-right: 0px; 
+    background: transparent;
+    text-align: Center; 
+    padding-left: -1px; 
+    padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight:bold; 
     font-size: 16px; 
@@ -46,5 +46,9 @@
 }
 
 .inactiveTab {
-    color: transparent;
+    color: white;
+}
+
+.centerContent {
+    text-align: center;
 }

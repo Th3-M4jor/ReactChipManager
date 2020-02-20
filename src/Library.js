@@ -2,6 +2,8 @@ import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
 import { libraryAsArray, getChip, BattleChip } from './ChipLibrary';
 import {LibraryChip, Packchip } from './battlechip';
+import './App.css';
+import './Battlechip.css';
 
 
 
@@ -19,27 +21,24 @@ export class Library extends React.Component {
             )
         });
         return (
-            <div style={{
-                borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "400px", overflowX: "scroll",
-                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", minHeight: "200px", maxHeight: "80vh"
-            }} id="fullLibrary">
+            <div className="Folder" id="fullLibrary">
                 <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                    <MDBCol size="2">
+                    <MDBCol size="2" className="debug Chip">
                         <span style={{ whiteSpace: "nowrap" }}>NAME</span>
                     </MDBCol>
-                    <MDBCol size="2">
+                    <MDBCol size="2" className="debug Chip">
                         SKILL
                         </MDBCol>
-                    <MDBCol size="2">
+                    <MDBCol size="2" className="debug Chip">
                         DAMAGE
                         </MDBCol>
-                    <MDBCol size="1">
+                    <MDBCol size="1" className="debug Chip">
                         RANGE
                         </MDBCol>
-                    <MDBCol size="1">
+                    <MDBCol size="1" className="debug Chip">
                         HITS
                         </MDBCol>
-                    <MDBCol size="1">
+                    <MDBCol size="1" className="debug Chip">
 
                     </MDBCol>
                 </MDBRow>
@@ -79,31 +78,28 @@ export class Pack extends React.Component {
         });
         */
         return (
-            <div style={{
-                borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
-                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", height: "80vh", minHeight:"200px", width:"99%"
-            }} id="fullPack">
+            <div id="fullPack" className="Folder">
                 <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                    <MDBCol size="2">
+                    <MDBCol size="2" className="debug">
                         NAME
                     </MDBCol>
-                    <MDBCol size="2">
+                    <MDBCol size="2" className="debug">
                         SKILL
                     </MDBCol>
 
-                    <MDBCol size="1">
+                    <MDBCol size="2" className="debug">
                         DAMAGE
                     </MDBCol>
-                    <MDBCol size="2">
+                    <MDBCol size="1" className="debug">
                         RANGE
                     </MDBCol>
-                    <MDBCol size="2">
+                    <MDBCol size="1" className="debug">
                         HITS
                     </MDBCol>
-                    <MDBCol size="1">
+                    <MDBCol size="1" className="debug">
 
                     </MDBCol>
-                    <MDBCol size="1">
+                    <MDBCol size="1" className="debug">
 
                     </MDBCol>
                 </MDBRow>

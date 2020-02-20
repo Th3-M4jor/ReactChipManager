@@ -85,23 +85,23 @@ class App extends React.Component {
         </div>
         <Router>
             <div style={{ backgroundColor: "#4abdb5", padding: "10px", width:"100%", border:"1px solid red" }}>
-              <MDBNav className="nav-tabs" classicTabs>
-                <MDBNavItem active={this.state.activeTab === "Hand"} className={this.state.activeTab === "Hand" ? "activeTab" : "inactiveTab"}>
-                  <MDBNavLink to="#" active={this.state.activeTab === "Hand"} onClick={this.toggle("Hand")} role="tab">
+              <MDBNav className="nav-tabs" tabs header>
+                <MDBNavItem active={this.state.activeTab === "Hand"} className={this.state.activeTab === "Hand" ? "activeTab" : "inactiveTab"} tag="div">
+                  <MDBNavLink to="#" active={this.state.activeTab === "Hand"} onClick={this.toggle("Hand")} role="tab" >
                     Hand
             </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem active={this.state.activeTab === "Folder1"} className={this.state.activeTab === "Folder1" ? "activeTab" : "inactiveTab"}>
+                <MDBNavItem active={this.state.activeTab === "Folder1"} className={this.state.activeTab === "Folder1" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Folder1"} onClick={this.toggle("Folder1")} role="tab">
                     Folder1
             </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem active={this.state.activeTab === "Pack"} className={this.state.activeTab === "Pack" ? "activeTab" : "inactiveTab"}>
+                <MDBNavItem active={this.state.activeTab === "Pack"} className={this.state.activeTab === "Pack" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Pack"} onClick={this.toggle("Pack")} role="tab">
                     Pack
             </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem active={this.state.activeTab === "Library"} className={this.state.activeTab === "Library" ? "activeTab" : "inactiveTab"}>
+                <MDBNavItem active={this.state.activeTab === "Library"} className={this.state.activeTab === "Library" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Library"} onClick={this.toggle("Library")} role="tab">
                     Library
             </MDBNavLink>

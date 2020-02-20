@@ -19,40 +19,40 @@ export class Packchip extends React.Component {
         let type = "";
         switch (chip.Type) {
             case "Giga":
-                type = "#f8c8d8";
+                type = "Giga";
                 break;
             case "Mega":
-                type = "#90f8f8";;
+                type = "Mega";
                 break;
             case "Standard":
             default:
-                type = "white";
+                type = "Chip";
                 break;
         }
         return (
             <MDBTooltip domElement>
-                <div style={{ color: type }}>
+                <div className={type}>
                     <MDBRow center>
-                        <MDBCol size="2">
+                        <MDBCol size="2" className="debug">
                             {chip.Name}
                         </MDBCol>
-                        <MDBCol size="2">
+                        <MDBCol size="2" className="debug">
                             {chip.Skill}
                         </MDBCol>
                         
-                        <MDBCol size="1">
+                        <MDBCol size="2" className="debug">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2">
+                        <MDBCol size="1" className="debug centerContent">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="2">
+                        <MDBCol size="1" className="debug">
                             {chip.Hits}
                         </MDBCol>
-                        <MDBCol size="1">
+                        <MDBCol size="1" className="debug centerContent">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
-                        <MDBCol size="1">
+                        <MDBCol size="1" className="debug">
                             {this.props.chipCount}
                         </MDBCol>
                     </MDBRow>
@@ -101,13 +101,13 @@ export class LibraryChip extends React.Component {
                         <MDBCol size="2" className="debug">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug centerContent">
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug">
                             {chip.Hits}
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug center">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                     </MDBRow>
