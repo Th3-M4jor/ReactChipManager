@@ -1,38 +1,50 @@
 .Chip {
-    background: "#00637b";
-    text-align: "Left"; 
-    padding-left: "0px"; 
-    padding-right: "1px"; 
+    background: #00637b;
+    text-align: Center; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
-    font-weight:"bold"; 
-    font-size: "16px"; 
-    color: "white";
-    margin-bottom: "0px";
-    text-shadow:"1px 1px grey";
+    font-weight: bold; 
+    font-size: 16px; 
+    color: white;
+    margin-bottom: 0px;
+    text-shadow:1px 1px grey;
 }
 
 .Mega {
-    background: "#00637b";
-    text-align: "Left"; 
-    padding-left: "0px"; 
-    padding-right: "1px"; 
+    background: #00637b;
+    text-align: Center; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
-    font-weight:"bold"; 
-    font-size: "16px"; 
-    color: "#90f8f8";
-    margin-bottom: "0px";
-    text-shadow:"1px 1px grey";
+    font-weight: bold; 
+    font-size: 16px; 
+    color: #90f8f8;
+    margin-bottom: 0px;
+    text-shadow: 1px 1px grey;
 }
 
 .Giga {
-    background: "#00637b";
-    text-align: "Left"; 
-    padding-left: "0px"; 
-    padding-right: "1px"; 
+    background: #00637b;
+    text-align: Left; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
-    font-weight:"bold"; 
-    font-size: "16px"; 
-    color: "#f8c8d8";
-    margin-bottom: "0px";
-    text-shadow:"1px 1px grey";
+    font-weight:bold; 
+    font-size: 16px; 
+    color: #f8c8d8;
+    margin-bottom: 0px;
+    text-shadow:1px 1px grey;
+}
+
+.debug {
+    border: 1px solid red;
+}
+
+.activeTab {
+    background-color: blue;
+}
+
+.inactiveTab {
+    color: transparent;
 }

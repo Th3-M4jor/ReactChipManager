@@ -17,7 +17,7 @@ const URL = "http://spartan364.hopto.org/chips.json";
  */
 
 
-
+const damageRegex = /(\d+)d(\d+)/;
 
 /**
  * @class LibraryChip represents a full battlechip's data
@@ -37,6 +37,15 @@ export class BattleChip {
         /** @private */this._hits = chipObj.Hits;
         /** @private */this._description = chipObj.Description;
         /** @private */this._all = chipObj.All;
+        /** @private */this._avgDamage = 0;
+        /** @private */this._maxDamage = 0;
+        let dice = damageRegex.exec(this._damage);
+        if(dice !== null) {
+            //average damage is determined by average die roll (always half max face value + 0.5) * number of dice
+            this._avgDamage = Math.floor((( +dice[2] / 2) + 0.5) * (+dice[1]));
+            this._maxDamage = +dice[2] * +dice[1];
+        }
+        
     }
 
     get Name() {
@@ -54,6 +63,18 @@ export class BattleChip {
 
     get Damage() {
         return this._damage;
+    }
+
+    get AvgDamage() {
+        return this._avgDamage;
+    }
+
+    get MaxDamage() {
+        return this._maxDamage;
+    }
+
+    get Range() {
+        return this._range;
     }
 
     get Type() {

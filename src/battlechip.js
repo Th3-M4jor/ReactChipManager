@@ -17,21 +17,21 @@ export class Packchip extends React.Component {
 
         let chip = getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
-        switch(chip.Type) {
+        switch (chip.Type) {
             case "Giga":
-                type = "Giga";
+                type = "#f8c8d8";
                 break;
             case "Mega":
-                type = "Mega";
+                type = "#90f8f8";;
                 break;
             case "Standard":
             default:
-                type = "Chip";
+                type = "white";
                 break;
         }
         return (
             <MDBTooltip domElement>
-                <div className={type}>
+                <div style={{ color: type }}>
                     <MDBRow center>
                         <MDBCol size="2">
                             {chip.Name}
@@ -39,17 +39,18 @@ export class Packchip extends React.Component {
                         <MDBCol size="2">
                             {chip.Skill}
                         </MDBCol>
-                        <MDBCol size="1">
-                            <ElementImage element={chip.Element} />
-                        </MDBCol>
+                        
                         <MDBCol size="1">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="1">
+                        <MDBCol size="2">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1">
+                        <MDBCol size="2">
                             {chip.Hits}
+                        </MDBCol>
+                        <MDBCol size="1">
+                            <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1">
                             {this.props.chipCount}
@@ -74,39 +75,40 @@ export class LibraryChip extends React.Component {
 
         let chip = getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
-        switch(chip.Type) {
+        switch (chip.Type) {
             case "Giga":
-                type = "#f8c8d8";
+                type = "Giga";
                 break;
             case "Mega":
-                type = "#90f8f8";
+                type = "Mega";
                 break;
             case "Standard":
             default:
-                type = "white";
+                type = "Chip";
                 break;
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => {this.props.addToPackCallback(chip.Name)}} style={{color: type}}>
+                <div onDoubleClick={() => { this.props.addToPackCallback(chip.Name) }} className={type}>
                     <MDBRow center>
-                        <MDBCol size="2">
-                            <span style={{whiteSpace: "nowrap"}}>{chip.Name}</span>
+                        <MDBCol size="2" className="debug">
+                            <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
-                        <MDBCol size="2">
+                        <MDBCol size="2" className="debug">
                             {chip.Skill}
                         </MDBCol>
-                        <MDBCol size="1">
-                            <ElementImage element={chip.Element} />
-                        </MDBCol>
-                        <MDBCol size="1">
+
+                        <MDBCol size="2" className="debug">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="1">
-                            <span>{chip.Range}</span>
+                        <MDBCol size="1" className="debug">
+                            {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1">
-                                {chip.Hits}
+                        <MDBCol size="1" className="debug">
+                            {chip.Hits}
+                        </MDBCol>
+                        <MDBCol size="1" className="debug">
+                            <ElementImage element={chip.Element} />
                         </MDBCol>
                     </MDBRow>
                 </div>
