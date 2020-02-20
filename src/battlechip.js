@@ -91,7 +91,7 @@ export class LibraryChip extends React.Component {
                 <div onDoubleClick={() => {this.props.addToPackCallback(chip.Name)}} style={{color: type}}>
                     <MDBRow center>
                         <MDBCol size="2">
-                            {chip.Name}
+                            <span style={{whiteSpace: "nowrap"}}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2">
                             {chip.Skill}
@@ -103,7 +103,7 @@ export class LibraryChip extends React.Component {
                             {chip.Damage}
                         </MDBCol>
                         <MDBCol size="1">
-                            {chip.Range}
+                            <span>{chip.Range}</span>
                         </MDBCol>
                         <MDBCol size="1">
                                 {chip.Hits}

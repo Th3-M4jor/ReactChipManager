@@ -21,7 +21,7 @@ export class Library extends React.Component {
         return (
             <div style={{
                 borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "400px", overflowX: "scroll",
-                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
+                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", minHeight: "200px", maxHeight: "80vh"
               }} id="fullLibrary">
             {toRender}
             </div>
@@ -53,7 +53,7 @@ export class Pack extends React.Component {
         return (
             <div style={{
                 borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "320px", overflowX: "scroll",
-                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
+                fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "80vh", minHeight: "200px"
               }} id="fullPack">
             {chips}
             </div>

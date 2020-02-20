@@ -14,7 +14,11 @@ class App extends React.Component {
     pack: {},
     hand: [],
     folder: [],
+    updateText: "",
   }
+
+
+  modificationTimeout = null;
 
   componentDidMount() {
     loadChips().then(() => {
@@ -24,6 +28,7 @@ class App extends React.Component {
         pack: {},
         hand: [],
         folder: [],
+        updateText: "",
       })
     });
   }
@@ -42,6 +47,7 @@ class App extends React.Component {
    * @param {string} chipName 
    */
   addToPack(chipName) {
+    clearTimeout(this.modificationTimeout);
     this.setState((state, props) => {
       if (typeof state.pack[chipName] != 'number') {
         state.pack[chipName] = 1;
@@ -54,8 +60,14 @@ class App extends React.Component {
         pack: state.pack,
         hand: state.hand,
         folder: state.folder,
+        updateText: `${state.pack[chipName]} ${chipName} total are now in your pack`,
       }
     });
+    this.modificationTimeout = setTimeout(() => {
+      this.setState({
+        updateText: "",
+      });
+    }, 15000);
   }
 
   render() {
@@ -66,7 +78,7 @@ class App extends React.Component {
     return (
       <div style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "800px" }}>
         <div style={{ backgroundColor: "#ffbd18", fontFamily: "Lucida Console", margin: "5px", color: "#FFFFFF", fontWeight: "bold" }}>
-          FOLDER EDIT
+          FOLDER EDIT <span style={{float: "right", color: "red"}}>{this.state.updateText}</span>
         </div>
         <Router>
           <MDBContainer>
