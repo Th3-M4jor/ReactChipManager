@@ -5,7 +5,7 @@
     padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight: bold; 
-    font-size: 16px; 
+    font-size: 14px; 
     color: white;
     margin-bottom: 0px;
     text-shadow:1px 1px grey;
@@ -18,7 +18,7 @@
     padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight: bold; 
-    font-size: 16px; 
+    font-size: 14px; 
     color: #90f8f8;
     margin-bottom: 0px;
     text-shadow: 1px 1px grey;
@@ -31,14 +31,14 @@
     padding-right: -1px; 
     font-family: "Lucida Console";
     font-weight:bold; 
-    font-size: 16px; 
+    font-size: 14px; 
     color: #f8c8d8;
     margin-bottom: 0px;
     text-shadow:1px 1px grey;
 }
 
 .debug {
-    border: 1px solid red;
+    border: 1px solid transparent;
 }
 
 .activeTab {

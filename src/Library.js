@@ -32,7 +32,7 @@ export class Library extends React.Component {
                     <MDBCol size="2" className="debug Chip">
                         DAMAGE
                         </MDBCol>
-                    <MDBCol size="1" className="debug Chip">
+                    <MDBCol size="2" className="debug Chip">
                         RANGE
                         </MDBCol>
                     <MDBCol size="1" className="debug Chip">
@@ -80,26 +80,26 @@ export class Pack extends React.Component {
         return (
             <div id="fullPack" className="Folder">
                 <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                    <MDBCol size="2" className="debug">
+                    <MDBCol size="2" className="debug Chip">
                         NAME
                     </MDBCol>
-                    <MDBCol size="2" className="debug">
+                    <MDBCol size="2" className="debug Chip">
                         SKILL
                     </MDBCol>
 
-                    <MDBCol size="2" className="debug">
+                    <MDBCol size="2" className="debug Chip">
                         DAMAGE
                     </MDBCol>
-                    <MDBCol size="1" className="debug">
+                    <MDBCol size="2" className="debug Chip">
                         RANGE
                     </MDBCol>
-                    <MDBCol size="1" className="debug">
+                    <MDBCol size="1" className="debug Chip">
                         HITS
                     </MDBCol>
-                    <MDBCol size="1" className="debug">
+                    <MDBCol size="1" className="debug Chip">
 
                     </MDBCol>
-                    <MDBCol size="1" className="debug">
+                    <MDBCol size="1" className="debug Chip">
 
                     </MDBCol>
                 </MDBRow>

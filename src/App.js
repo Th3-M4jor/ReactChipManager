@@ -84,7 +84,7 @@ class App extends React.Component {
           {this.state.activeTab} <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
         </div>
         <Router>
-            <div style={{ backgroundColor: "#4abdb5", padding: "10px", width:"100%", border:"1px solid red" }}>
+            <div style={{ backgroundColor: "#4abdb5", padding: "10px", width:"100%"}}>
               <MDBNav className="nav-tabs" tabs header>
                 <MDBNavItem active={this.state.activeTab === "Hand"} className={this.state.activeTab === "Hand" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Hand"} onClick={this.toggle("Hand")} role="tab" >
@@ -129,7 +129,7 @@ class App extends React.Component {
                   </MDBContainer>
                 </MDBTabPane>
                 <MDBTabPane tabId="Pack" role="tabpanel">
-                  <MDBContainer>
+                  <MDBContainer fluid>
                     <Pack contents={this.state.pack} />
                   </MDBContainer>
                 </MDBTabPane>

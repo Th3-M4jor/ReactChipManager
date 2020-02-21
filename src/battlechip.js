@@ -33,26 +33,26 @@ export class Packchip extends React.Component {
             <MDBTooltip domElement>
                 <div className={type}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug Chip">
                             {chip.Name}
                         </MDBCol>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug Chip">
                             {chip.Skill}
                         </MDBCol>
                         
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug Chip">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent">
+                        <MDBCol size="2" className="debug Chip">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug Chip">
                             {chip.Hits}
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent">
+                        <MDBCol size="1" className="debug centerContent Chip">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug Chip">
                             {this.props.chipCount}
                         </MDBCol>
                     </MDBRow>
@@ -101,13 +101,13 @@ export class LibraryChip extends React.Component {
                         <MDBCol size="2" className="debug">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent">
+                        <MDBCol size="2" className="debug centerContent">
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug">
                             {chip.Hits}
                         </MDBCol>
-                        <MDBCol size="1" className="debug center">
+                        <MDBCol size="1" className="debug centerContent">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                     </MDBRow>
