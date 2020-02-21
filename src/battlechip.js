@@ -34,7 +34,7 @@ export class Packchip extends React.Component {
                 <div className={type}>
                     <MDBRow center>
                         <MDBCol size="2" className="debug Chip">
-                            {chip.Name}
+                        <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2" className="debug Chip">
                             {chip.Skill}
@@ -47,7 +47,7 @@ export class Packchip extends React.Component {
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug Chip">
-                            {chip.Hits}
+                        <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent Chip">
                             <ElementImage element={chip.Element} />
@@ -105,7 +105,7 @@ export class LibraryChip extends React.Component {
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug">
-                            {chip.Hits}
+                        <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent">
                             <ElementImage element={chip.Element} />
