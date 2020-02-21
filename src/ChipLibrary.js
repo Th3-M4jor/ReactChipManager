@@ -1,4 +1,4 @@
-const URL = "http://spartan364.hopto.org/chips.json";
+const URL = "https://spartan364.hopto.org/chips.json";
 
 
 /**
