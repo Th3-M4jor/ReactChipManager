@@ -1,6 +1,5 @@
 import React from 'react';
-import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
-import PropTypes from 'prop-types';
+import { MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
 import { ElementImage } from "./ElementImage";
 import { getChip } from "./ChipLibrary";
 import "./Battlechip.css"
@@ -33,26 +32,26 @@ export class Packchip extends React.Component {
             <MDBTooltip domElement>
                 <div className={type}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug Chip">
+                        <MDBCol size="2" className="debug">
                         <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
-                        <MDBCol size="2" className="debug Chip">
+                        <MDBCol size="2" className="debug">
                             {chip.Skill}
                         </MDBCol>
                         
-                        <MDBCol size="2" className="debug Chip">
+                        <MDBCol size="2" className="debug">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2" className="debug Chip">
+                        <MDBCol size="2" className="debug">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1" className="debug Chip">
+                        <MDBCol size="1" className="debug">
                         <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent Chip">
+                        <MDBCol size="1" className="debug centerContent">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
-                        <MDBCol size="1" className="debug Chip">
+                        <MDBCol size="1" className="debug">
                             {this.props.chipCount}
                         </MDBCol>
                     </MDBRow>

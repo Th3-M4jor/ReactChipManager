@@ -19,6 +19,21 @@ const URL = "https://spartan364.hopto.org/chips.json";
 
 const damageRegex = /(\d+)d(\d+)/;
 
+const elementsEnum = {
+    Fire: 0,
+    Aqua: 1,
+    Elec: 2,
+    Wood: 3,
+    Wind: 4,
+    Sword: 5,
+    Break: 6,
+    Cursor: 7,
+    Recovery: 8,
+    Invis: 9,
+    Object: 10,
+    Null: 11,
+}
+
 /**
  * @class LibraryChip represents a full battlechip's data
  */
@@ -29,7 +44,12 @@ export class BattleChip {
      */
     constructor(chipObj) {
         /** @private */this._name = chipObj.Name;
-        /** @private */this._element = chipObj.Element;
+        /** @private
+         *  @type {number[]}
+         */
+        this._element = chipObj.Element.map((elem) => {
+            return elementsEnum[elem];
+        });
         /** @private */this._skills = chipObj.Skills;
         /** @private */this._range = chipObj.Range;
         /** @private */this._damage = chipObj.Damage;

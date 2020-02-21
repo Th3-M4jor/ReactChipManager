@@ -1,5 +1,6 @@
 import React from 'react';
 
+/*
 const aquaURL = "https://vignette.wikia.nocookie.net/megaman/images/f/fe/BC_Element_Aqua.png";
 
 const breakURL = "https://vignette.wikia.nocookie.net/megaman/images/0/0e/BC_Attribute_Break.png";
@@ -23,6 +24,22 @@ const swordURL = "https://vignette.wikia.nocookie.net/megaman/images/d/d5/BC_Att
 const windURL = "https://vignette.wikia.nocookie.net/megaman/images/b/b1/BC_Attribute_Wind.png";
 
 const woodURL = "https://vignette.wikia.nocookie.net/megaman/images/8/83/BC_Element_Wood.png";
+*/
+
+const URLList = [
+    "https://vignette.wikia.nocookie.net/megaman/images/3/38/BC_Element_Heat.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/f/fe/BC_Element_Aqua.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/f/f6/BC_Element_Elec.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/8/83/BC_Element_Wood.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/b/b1/BC_Attribute_Wind.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/d/d5/BC_Attribute_Sword.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/0/0e/BC_Attribute_Break.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/2/2b/TypeCursor.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/8/81/TypeRecover.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/e/e0/TypeInvis.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/4/4c/TypeObstacle.png",
+    "https://vignette.wikia.nocookie.net/megaman/images/4/47/BC_Element_Null.png",
+]
 
 
 export class ElementImage extends React.Component {
@@ -31,6 +48,13 @@ export class ElementImage extends React.Component {
             throw new Error("element not set");
         }
         let images = this.props.element.map(element => {
+            if(!URLList[element]) {
+                throw new Error("bad element name");
+            }
+            return (
+                <img src={URLList[element]} alt=""/>
+            );
+            /*
             switch(element) {
                 case "Fire":
                     return (<img src={fireURL} alt=""/>);
@@ -59,6 +83,7 @@ export class ElementImage extends React.Component {
                 default:
                     throw new Error("bad element name");
             }
+            */
         });
         return (
         <span>

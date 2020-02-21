@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane } from 'mdbreact';
+import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane } from 'mdbreact';
 import './App.css';
 import './Battlechip.css';
-import { Packchip, LibraryChip } from './battlechip';
 import { Library, Pack } from './Library';
 import { loadChips } from './ChipLibrary';
 

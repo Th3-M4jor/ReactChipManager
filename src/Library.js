@@ -1,7 +1,8 @@
 import React from 'react';
-import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
+import { MDBRow, MDBCol, } from 'mdbreact';
+// eslint-disable-next-line
 import { libraryAsArray, getChip, BattleChip } from './ChipLibrary';
-import {LibraryChip, Packchip } from './battlechip';
+import { LibraryChip, Packchip } from './battlechip';
 import './App.css';
 import './Battlechip.css';
 
