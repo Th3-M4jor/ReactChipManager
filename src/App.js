@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane, MDBRow, MDBCol } from 'mdbreact';
+import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane, } from 'mdbreact';
 import './App.css';
 import './Battlechip.css';
 import { Library, Pack } from './Library';
