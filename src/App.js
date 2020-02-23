@@ -129,12 +129,12 @@ class App extends React.Component {
                 </MDBTabPane>
                 <MDBTabPane tabId="Pack" role="tabpanel">
                   <MDBContainer fluid>
-                    <Pack contents={this.state.pack} />
+                    <Pack contents={this.state.pack} active={this.state.activeTab === "Pack"}/>
                   </MDBContainer>
                 </MDBTabPane>
                 <MDBTabPane tabId="Library" role="tabpanel">
                   
-                    <Library addToPackCallback={(chipName) => { this.addToPack(chipName) }} />
+                    <Library addToPackCallback={(chipName) => { this.addToPack(chipName) }} active={this.state.activeTab === "Library"}/>
                   
                 </MDBTabPane>
               </MDBTabContent>

@@ -52,7 +52,7 @@ export class ElementImage extends React.Component {
                 throw new Error("bad element name");
             }
             return (
-                <img src={URLList[element]} alt="" key={element.toString()}/>
+                <img src={URLList[element]} alt="" key={element.toString()} />
             );
             /*
             switch(element) {

@@ -50,6 +50,7 @@ export class Library extends React.Component {
     }
 
     render() {
+
         if (!this.props.addToPackCallback) {
             throw new Error("missing add to pack callback");
         }
@@ -60,11 +61,12 @@ export class Library extends React.Component {
                 <LibraryChip chipName={chip.Name} addToPackCallback={this.props.addToPackCallback} key={chip.Name}/>
             )
         });
+        let libraryStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
             <MDBContainer fluid>
                 <MDBRow>
-                    <MDBCol size="11" className="debug">
-                        <MDBContainer className="Folder" id="fullLibrary" fluid>
+                    <MDBCol size="11" className="debug nopadding">
+                        <MDBContainer className={libraryStatus} id="fullLibrary" fluid>
                             <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
                                 <MDBCol size="2" className="debug Chip nopadding">
                                     <span style={{ whiteSpace: "nowrap" }}>NAME</span>
@@ -108,6 +110,7 @@ export class Library extends React.Component {
 
 export class Pack extends React.Component {
     render() {
+
         if (typeof this.props.contents != 'object') {
             throw new Error("No pack set");
         }
@@ -134,8 +137,9 @@ export class Pack extends React.Component {
             )
         });
         */
+       let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
-            <MDBContainer id="fullPack" className="Folder" fluid>
+            <MDBContainer id="fullPack" className={packStatus} fluid>
                 <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
                     <MDBCol size="2" className="debug Chip">
                         NAME

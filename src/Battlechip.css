@@ -5,7 +5,7 @@
     padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight: bold; 
-    font-size: 14px; 
+    font-size: 15px; 
     color: white;
     margin-bottom: 0px;
     text-shadow:1px 1px grey;
@@ -18,7 +18,7 @@
     padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight: bold; 
-    font-size: 14px; 
+    font-size: 15px; 
     color: #90f8f8;
     margin-bottom: 0px;
     text-shadow: 1px 1px grey;
@@ -31,7 +31,7 @@
     padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight:bold; 
-    font-size: 14px; 
+    font-size: 15px; 
     color: #f8c8d8;
     margin-bottom: 0px;
     text-shadow:1px 1px grey;
@@ -51,4 +51,8 @@
 
 .centerContent {
     text-align: center;
+}
+
+img {
+    height: 100%;
 }

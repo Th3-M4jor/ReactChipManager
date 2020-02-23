@@ -11,6 +11,9 @@
     font-size: 16px;
     color: white;
     height: 80vh;
+}
+
+.activefolder {
     will-change: scroll-position;
 }
 
@@ -19,12 +22,21 @@ div.nopadding {
     padding-right: 0px;
 }
 
+div.folderPadding {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 div.centercontent {
     text-align: center;
 }
 
-div.libraryNav {
-    will-change: transform;
+div.noPadLeft {
+    padding-left: 0px;
+}
+
+div.noPadRight {
+    padding-right: 0px;
 }
 
 .noselect {
