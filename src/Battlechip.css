@@ -1,8 +1,8 @@
 .Chip {
     background: transparent;
     text-align: Center; 
-    padding-left: -1px; 
-    padding-right: -1px; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight: bold; 
     font-size: 14px; 
@@ -14,8 +14,8 @@
 .Mega {
     background: transparent;
     text-align: Center; 
-    padding-left: -1px; 
-    padding-right: -1px; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight: bold; 
     font-size: 14px; 
@@ -27,8 +27,8 @@
 .Giga {
     background: transparent;
     text-align: Center; 
-    padding-left: -1px; 
-    padding-right: -1px; 
+    padding-left: 0px; 
+    padding-right: 0px; 
     font-family: "Lucida Console";
     font-weight:bold; 
     font-size: 14px; 
@@ -38,7 +38,7 @@
 }
 
 .debug {
-    border: 1px solid transparent;
+    border: 1px solid red;
 }
 
 .activeTab {

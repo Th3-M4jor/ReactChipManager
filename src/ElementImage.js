@@ -48,11 +48,11 @@ export class ElementImage extends React.Component {
             throw new Error("element not set");
         }
         let images = this.props.element.map(element => {
-            if(!URLList[element]) {
+            if (!URLList[element]) {
                 throw new Error("bad element name");
             }
             return (
-                <img src={URLList[element]} alt=""/>
+                <img src={URLList[element]} alt="" key={element.toString()}/>
             );
             /*
             switch(element) {
@@ -86,9 +86,9 @@ export class ElementImage extends React.Component {
             */
         });
         return (
-        <span>
-        {images}
-        </span>
+            <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>
+                {images}
+            </span>
         )
     }
 }

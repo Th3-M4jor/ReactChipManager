@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane } from 'mdbreact';
+import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane, MDBRow, MDBCol } from 'mdbreact';
 import './App.css';
 import './Battlechip.css';
 import { Library, Pack } from './Library';
@@ -78,12 +78,12 @@ class App extends React.Component {
       return null;
     }
     return (
-      <MDBContainer style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "800px" }}>
+      <MDBContainer style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "100%" }}>
         <div style={{ backgroundColor: "#ffbd18", fontFamily: "Lucida Console", margin: "5px", color: "#FFFFFF", fontWeight: "bold" }}>
           {this.state.activeTab} <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
         </div>
         <Router>
-            <div style={{ backgroundColor: "#4abdb5", padding: "10px", width:"100%"}}>
+            <div style={{ backgroundColor: "#4abdb5", padding: "10px"}}>
               <MDBNav className="nav-tabs" tabs header>
                 <MDBNavItem active={this.state.activeTab === "Hand"} className={this.state.activeTab === "Hand" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Hand"} onClick={this.toggle("Hand")} role="tab" >
@@ -133,9 +133,9 @@ class App extends React.Component {
                   </MDBContainer>
                 </MDBTabPane>
                 <MDBTabPane tabId="Library" role="tabpanel">
-                  <MDBContainer fluid>
+                  
                     <Library addToPackCallback={(chipName) => { this.addToPack(chipName) }} />
-                  </MDBContainer>
+                  
                 </MDBTabPane>
               </MDBTabContent>
             </div>

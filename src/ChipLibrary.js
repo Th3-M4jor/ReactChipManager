@@ -19,6 +19,7 @@ const URL = "https://spartan364.hopto.org/chips.json";
 
 const damageRegex = /(\d+)d(\d+)/;
 
+
 const elementsEnum = {
     Fire: 0,
     Aqua: 1,
@@ -32,10 +33,38 @@ const elementsEnum = {
     Invis: 9,
     Object: 10,
     Null: 11,
+};
+
+const skillsEnum = {
+    Sense: 0,
+    Info: 1,
+    Coding: 2,
+    Strength: 3,
+    Speed: 4,
+    Stamina: 5,
+    Charm: 6,
+    Bravery: 7,
+    Affinity: 8,
+    Varies: 9,
+    None: 10,
+};
+
+const rangesEnum = {
+    Far: 0,
+    Near: 1,
+    Close: 2,
+    Self: 3,
+}
+
+const chipTypeEnum = {
+    Standard: 0,
+    Mega: 1,
+    Giga: 2,
+    Dark: 3,
 }
 
 /**
- * @class LibraryChip represents a full battlechip's data
+ * @class BattleChip represents a full battlechip's data
  */
 export class BattleChip {
     /**
@@ -57,15 +86,32 @@ export class BattleChip {
         /** @private */this._hits = chipObj.Hits;
         /** @private */this._description = chipObj.Description;
         /** @private */this._all = chipObj.All;
+        /** @private
+         *  @type {number} */
+        this._skillSortPos = 0;
+        if (this._skills.length > 1) {
+            this._skillSortPos = skillsEnum.Varies;
+        } else {
+            this._skillSortPos = skillsEnum[this._skills[0]];
+        }
         /** @private */this._avgDamage = 0;
         /** @private */this._maxDamage = 0;
         let dice = damageRegex.exec(this._damage);
-        if(dice !== null) {
+        if (dice !== null) {
             //average damage is determined by average die roll (always half max face value + 0.5) * number of dice
-            this._avgDamage = Math.floor((( +dice[2] / 2) + 0.5) * (+dice[1]));
+            this._avgDamage = Math.floor(((+dice[2] / 2) + 0.5) * (+dice[1]));
             this._maxDamage = +dice[2] * +dice[1];
         }
-        
+        /**@private 
+         * @type {number}
+         */
+        this._chipTypeSortPos = chipTypeEnum[this._type];
+        /**
+         * @private
+         * @type {number}
+         */
+        this._chipRangeSortPos = rangesEnum[this._range];
+
     }
 
     get Name() {
@@ -77,7 +123,7 @@ export class BattleChip {
     }
 
     get Skill() {
-        if(this._skills.length > 1) return "Varies";
+        if (this._skills.length > 1) return "Varies";
         else return this._skills[0];
     }
 
@@ -109,6 +155,18 @@ export class BattleChip {
         return this._description;
     }
 
+    get RangeSortPos() {
+        return this._chipRangeSortPos;
+    }
+
+    get TypeSortPos() {
+        return this._chipTypeSortPos;
+    }
+
+    get SkillSortPos() {
+        return this._skillSortPos;
+    }
+
     /**
      * the full text of the chip as written in the official Chip Library
      */
@@ -119,7 +177,7 @@ export class BattleChip {
 
 }
 
-/**@type {Map<string, LibraryChip>} */
+/**@type {Map<string, BattleChip>} */
 var library = new Map();
 
 

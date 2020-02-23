@@ -30,28 +30,28 @@ export class Packchip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div className={type}>
+                <div className={type + " noselect"}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug">
-                        <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
+                        <MDBCol size="2" className="debug nopadding">
+                        <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>
                         </MDBCol>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             {chip.Skill}
                         </MDBCol>
                         
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug nopadding">
                         <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent">
+                        <MDBCol size="1" className="debug nopadding centercontent">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug nopadding">
                             {this.props.chipCount}
                         </MDBCol>
                     </MDBRow>
@@ -88,25 +88,25 @@ export class LibraryChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { this.props.addToPackCallback(chip.Name) }} className={type}>
+                <div onDoubleClick={() => { this.props.addToPackCallback(chip.Name) }} className={type + " noselect"}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             {chip.Skill}
                         </MDBCol>
 
-                        <MDBCol size="2" className="debug">
+                        <MDBCol size="2" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2" className="debug centerContent">
+                        <MDBCol size="2" className="debug centercontent nopadding">
                             {chip.Range}
                         </MDBCol>
-                        <MDBCol size="1" className="debug">
+                        <MDBCol size="1" className="debug nopadding centercontent">
                         <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
-                        <MDBCol size="1" className="debug centerContent">
+                        <MDBCol size="1" className="debug centerContent nopadding">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                     </MDBRow>
