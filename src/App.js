@@ -11,11 +11,8 @@ class App extends React.Component {
   state = {
     chipsLoaded: false,
     activeTab: "Pack",
-    pack: {},
-    folders: [[]],
     updateText: "",
   }
-
 
   modificationTimeout = null;
 
@@ -24,8 +21,6 @@ class App extends React.Component {
       this.setState({
         chipsLoaded: true,
         activeTab: "Library",
-        pack: {},
-        folders: [[]],
         updateText: "",
       })
     });
@@ -33,34 +28,21 @@ class App extends React.Component {
 
   toggle = tab => e => {
     if (this.state.activeTab !== tab) {
-      clearTimeout(this.modificationTimeout);
       this.setState({
         activeTab: tab,
-        updateText: "",
       });
     }
   }
 
 
   /**
-   * 
-   * @param {string} chipName 
+   * Callback function for some actions to set a message
+   * @param {string} msg 
    */
-  addToPack(chipName) {
+  setMessage(msg) {
     clearTimeout(this.modificationTimeout);
-    this.setState((state, props) => {
-      if (typeof state.pack[chipName] != 'number') {
-        state.pack[chipName] = 1;
-      } else {
-        state.pack[chipName] += 1;
-      }
-      return {
-        chipsLoaded: state.chipsLoaded,
-        activeTab: state.activeTab,
-        pack: state.pack,
-        folders: state.folders,
-        updateText: `${state.pack[chipName]} ${chipName} total are now in your pack`,
-      }
+    this.setState({
+      updateText: msg,
     });
     this.modificationTimeout = setTimeout(() => {
       this.setState({
@@ -73,6 +55,37 @@ class App extends React.Component {
    * 
    * @param {string} chipName 
    */
+  /*
+  addToPack(chipName) {
+    clearTimeout(this.modificationTimeout);
+    this.setState((state, props) => {
+      if (typeof state.pack[chipName] != 'number') {
+        state.pack[chipName] = 1;
+      } else {
+        state.pack[chipName] += 1;
+      }
+      return {
+        chipsLoaded: state.chipsLoaded,
+        activeTab: state.activeTab,
+        pack: state.pack,
+        usedPack: state.usedPack,
+        folders: state.folders,
+        updateText: `${state.pack[chipName]} ${chipName} total are now in your pack`,
+      }
+    });
+    this.modificationTimeout = setTimeout(() => {
+      this.setState({
+        updateText: "",
+      });
+    }, 15000);
+  }
+  */
+
+  /**
+   * 
+   * @param {string} chipName 
+   */
+  /*
   removeFromPack(chipName) {
     clearTimeout(this.modificationTimeout);
     this.setState((state, props) => {
@@ -87,6 +100,7 @@ class App extends React.Component {
         chipsLoaded: state.chipsLoaded,
         activeTab: state.activeTab,
         pack: state.pack,
+        usedPack: state.usedPack,
         folders: state.folders,
         updateText: `A copy of ${chipName} has been removed from your pack`,
       }
@@ -96,7 +110,7 @@ class App extends React.Component {
         updateText: "",
       });
     }, 15000);
-  }
+  } */
 
   render() {
 
@@ -144,13 +158,13 @@ class App extends React.Component {
                 <MDBTabPane tabId="Pack" role="tabpanel">
                   <MDBContainer fluid>
 
-                    <Pack contents={this.state.pack} removeCallback={(chipName) => {this.removeFromPack(chipName)}} addToFolderCallback={(chipName, folderNum) => {}} active={this.state.activeTab === "Pack"} numFolders={this.state.folders.length}/>
+                    <Pack contents={this.state.pack} active={this.state.activeTab === "Pack"} msgCallback={(msg) => this.setMessage(msg)}/>
 
                   </MDBContainer>
                 </MDBTabPane>
                 <MDBTabPane tabId="Library" role="tabpanel">
                   
-                    <Library addToPackCallback={(chipName) => { this.addToPack(chipName) }} active={this.state.activeTab === "Library"}/>
+                    <Library msgCallback={(msg) => this.setMessage(msg)} active={this.state.activeTab === "Library"}/>
                   
                 </MDBTabPane>
               </MDBTabContent>

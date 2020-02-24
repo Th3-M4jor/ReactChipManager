@@ -28,9 +28,28 @@ export class Packchip extends React.Component {
                 type = "Chip";
                 break;
         }
+        /**
+         * @type {function}
+         */
+        let action;
+        if(this.props.action === "remove") {
+            action = () => {
+                chip.Owned--; 
+                this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`);
+            };
+        } else {
+            action = () => {
+                try {
+                    chip.addToFolder();
+                    this.props.msgCallback(`A copy of ${chip.Name} has been added to your folder`);
+                } catch(err) {
+                    alert(err.message);
+                }
+            };
+        }
         return (
             <MDBTooltip domElement>
-                <div className={type + " noselect"} onDoubleClick={() => {this.props.doubleClickAction(chip.Name, this.props.folderNum)}}>
+                <div className={type + " noselect"} onDoubleClick={action}>
                     <MDBRow center>
                         <MDBCol size="2" className="debug nopadding">
                         <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>
@@ -39,7 +58,7 @@ export class Packchip extends React.Component {
                             {chip.Skill}
                         </MDBCol>
                         
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="1" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
                         <MDBCol size="2" className="debug nopadding">
@@ -52,7 +71,10 @@ export class Packchip extends React.Component {
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding">
-                            {this.props.chipCount}
+                            {chip.Owned - chip.InFolder}
+                        </MDBCol>
+                        <MDBCol size="1" className="debug nopadding">
+                            {chip.Used}
                         </MDBCol>
                     </MDBRow>
                 </div>
@@ -68,8 +90,8 @@ export class LibraryChip extends React.Component {
 
 
     render() {
-        if (!this.props.chipName || !this.props.addToPackCallback) {
-            throw new Error("missing prop");
+        if (!this.props.chipName) {
+            throw new Error("missing chipName");
         }
 
         let chip = getChip(this.props.chipName.toLocaleLowerCase());
@@ -88,7 +110,7 @@ export class LibraryChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { this.props.addToPackCallback(chip.Name) }} className={type + " noselect"}>
+                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect"}>
                     <MDBRow center>
                         <MDBCol size="2" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>

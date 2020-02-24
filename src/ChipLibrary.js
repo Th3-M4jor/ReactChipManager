@@ -67,6 +67,25 @@ const chipTypeEnum = {
  * @class BattleChip represents a full battlechip's data
  */
 export class BattleChip {
+    
+
+    /** @private */static _NUM_IN_FOLDER = 0;
+    /** @private */static _FOLDER_LIMIT = 10;
+
+    static getFolderSize() {
+        return BattleChip._FOLDER_LIMIT;
+    }
+
+    /**
+     * 
+     * @param {number} newSize 
+     */
+    static setFolderSize(newSize) {
+        if(newSize < BattleChip._NUM_IN_FOLDER) {
+            throw new Error("You must remove chips from your folder before you can lower this number");
+        }
+    }
+
     /**
      * 
      * @param {chipProps} chipObj the raw chip data
@@ -111,6 +130,11 @@ export class BattleChip {
          * @type {number}
          */
         this._chipRangeSortPos = rangesEnum[this._range];
+
+
+        /** @private */this._owned = 0;
+        /** @private */this._used = 0;
+        /** @private */this._inFolder = 0;
 
     }
 
@@ -167,11 +191,53 @@ export class BattleChip {
         return this._skillSortPos;
     }
 
+    get Owned() {
+        return this._owned;
+    }
+
+    get Used() {
+        return this._used;
+    }
+
+    /**
+     * @param {number} newCt
+     */
+    set Owned(newCt) {
+        if(newCt < this._used) {
+            this._used = newCt;
+        }
+        this._owned = newCt;
+    }
+
+    /**
+     * @param {number} newCt
+     */
+    set Used(newCt) {
+        if(newCt > this._owned) {
+            throw new Error("Cannot set used count higher than owned count");
+        }
+        this._used = newCt;
+    }
+
+    get InFolder() {
+        return this._inFolder;
+    }
+
     /**
      * the full text of the chip as written in the official Chip Library
      */
     get All() {
         return this._all;
+    }
+
+    addToFolder() {
+        let unused = this._owned - this._used - this._inFolder;
+        if(unused > 0 && BattleChip._FOLDER_LIMIT > BattleChip._NUM_IN_FOLDER) {
+            this._inFolder++;
+            BattleChip._NUM_IN_FOLDER++;
+        } else {
+            throw new Error("Cannot add that to your folder, either not enough unused, or too many in your folder or your folder has too many chips already");
+        }
     }
 
 

@@ -50,15 +50,11 @@ export class Library extends React.Component {
     }
 
     render() {
-
-        if (!this.props.addToPackCallback) {
-            throw new Error("missing add to pack callback");
-        }
         let chips = libraryAsArray();
         chips = this.sortChips(chips);
         let toRender = chips.map((chip) => {
             return (
-                <LibraryChip chipName={chip.Name} addToPackCallback={this.props.addToPackCallback} key={chip.Name} />
+                <LibraryChip chipName={chip.Name} msgCallback={this.props.msgCallback} key={chip.Name} />
             )
         });
         let libraryStatus = (this.props.active ? "Folder activefolder" : "Folder");
@@ -145,7 +141,7 @@ export class Pack extends React.Component {
             case "Range":
                 return list.sort((a, b) => cmp(a.RangeSortPos, b.RangeSortPos) || cmp(a.Name, b.Name));
             case "Owned":
-                return list.sort((a, b) => cmp(this.props.contents[a.Name], this.props.contents[b.Name]) || cmp(a.Name, b.Name));
+                return list.sort((a, b) => cmp(a.Owned, b.Owned) || cmp(a.Name, b.Name));
             default:
                 throw Error("Invalid sort option");
         }
@@ -153,30 +149,18 @@ export class Pack extends React.Component {
 
     render() {
 
-        if (typeof this.props.contents != 'object') {
-            throw new Error("No pack set");
-        }
 
         /**@type {BattleChip[]} */
-        let chipList = [];
-
-        for (const property in this.props.contents) {
-            chipList.push(getChip(property));
-        }
-        chipList.sort((a, b) => a.Name.localeCompare(b.Name));
-
-
-        let action;
-        if(this.state.doubleClickAction === "remove") {
-            action = this.props.removeCallback;
-        }
-        else {
-            action = this.props.addToFolderCallback;
-        }
+        let chipList = libraryAsArray().filter((chip) => {
+            return (chip.Owned - chip.InFolder) > 0;
+        });
+        
+        this.sortChips(chipList);
 
         let chips = chipList.map((chip) => {
+            
             return (
-                <Packchip chipName={chip.Name} chipCount={this.props.contents[chip.Name]} key={chip.Name} doubleClickAction={action} folderNum={this.state.doubleClickAction}/>
+                <Packchip chipName={chip.Name} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback}/>
             );
         });
         /*
@@ -189,14 +173,6 @@ export class Pack extends React.Component {
         });
         */
         let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
-        let doubleClickOptions = [(
-            <option value="remove">Remove</option>
-        )];
-        for(let i = 0; i < this.props.numFolders; i++) {
-            doubleClickOptions.push(
-                <option value={i + ""}>{"Folder" + (i + 1)}</option>
-            );
-        }
         return (
 
             <MDBContainer fluid className="nopadding">
@@ -211,7 +187,7 @@ export class Pack extends React.Component {
                                     SKILL
                     </MDBCol>
 
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="1" className="debug Chip nopadding">
                                     DAMAGE
                     </MDBCol>
                                 <MDBCol size="2" className="debug Chip nopadding">
@@ -225,6 +201,9 @@ export class Pack extends React.Component {
                                 </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
                                 #
+                                </MDBCol>
+                                <MDBCol size="1" className="debug Chip nopadding">
+                                USED
                                 </MDBCol>
                             </MDBRow>
                             {chips}
@@ -247,7 +226,8 @@ export class Pack extends React.Component {
                         <br />
                         <span unselectable="off">Double Click Action</span><br />
                         <select value={this.state.doubleClickAction} onChange={(e) => {this.doubleClickActionChanged(e)}} style={{width: "100%"}}>
-                            {doubleClickOptions}
+                            <option value="remove">Remove</option>
+                            <option value="folder">Folder</option>
                         </select>
                     </MDBCol>
                 </MDBRow>
