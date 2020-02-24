@@ -21,7 +21,7 @@ export class Library extends React.Component {
 
 
     sortSelectChanged(event) {
-        this.setState({sortBy: event.target.value});
+        this.setState({ sortBy: event.target.value });
     }
 
 
@@ -31,7 +31,7 @@ export class Library extends React.Component {
      * @returns {BattleChip[]}
      */
     sortChips(list) {
-        switch(this.state.sortBy) {
+        switch (this.state.sortBy) {
             case "Name":
                 return list.sort((a, b) => cmp(a.TypeSortPos, b.TypeSortPos) || cmp(a.Name, b.Name));
             case "Element":
@@ -58,7 +58,7 @@ export class Library extends React.Component {
         chips = this.sortChips(chips);
         let toRender = chips.map((chip) => {
             return (
-                <LibraryChip chipName={chip.Name} addToPackCallback={this.props.addToPackCallback} key={chip.Name}/>
+                <LibraryChip chipName={chip.Name} addToPackCallback={this.props.addToPackCallback} key={chip.Name} />
             )
         });
         let libraryStatus = (this.props.active ? "Folder activefolder" : "Folder");
@@ -91,8 +91,8 @@ export class Library extends React.Component {
                         </MDBContainer>
                     </MDBCol>
                     <MDBCol size="1" className="debug nopadding">
-                        <span unselectable="off">Sort By</span><br/>
-                        <select value={this.state.sortBy} onChange={(e) => {this.sortSelectChanged(e)}} style={{width:"100%"}}>
+                        <span unselectable="on">Sort By</span><br />
+                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
                             <option value="MaxDamage">MaxDamage</option>
@@ -100,6 +100,7 @@ export class Library extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                         </select>
+
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
@@ -109,6 +110,42 @@ export class Library extends React.Component {
 
 
 export class Pack extends React.Component {
+
+    state = {
+        sortBy: "Name",
+    }
+
+
+    sortSelectChanged(event) {
+        this.setState({ sortBy: event.target.value });
+    }
+
+    /**
+     * @private
+     * @param {BattleChip[]} list
+     * @returns {BattleChip[]}
+     */
+    sortChips(list) {
+        switch (this.state.sortBy) {
+            case "Name":
+                return list.sort((a, b) => cmp(a.TypeSortPos, b.TypeSortPos) || cmp(a.Name, b.Name));
+            case "Element":
+                return list.sort((a, b) => cmp(a.Element[0], b.Element[0]) || cmp(a.Name, b.Name));
+            case "MaxDamage":
+                return list.sort((a, b) => cmp(b.MaxDamage, a.MaxDamage) || cmp(a.Name, b.Name));
+            case "AverageDamage":
+                return list.sort((a, b) => cmp(b.AvgDamage, a.AvgDamage) || cmp(a.Name, b.Name));
+            case "Skill":
+                return list.sort((a, b) => cmp(a.SkillSortPos, b.SkillSortPos) || cmp(a.Name, b.Name));
+            case "Range":
+                return list.sort((a, b) => cmp(a.RangeSortPos, b.RangeSortPos) || cmp(a.Name, b.Name));
+            case "Owned":
+                return list.sort((a, b) => cmp(this.props.contents[a.Name], this.props.contents[b.Name]) || cmp(a.Name, b.Name));
+            default:
+                throw Error("Invalid sort option");
+        }
+    }
+
     render() {
 
         if (typeof this.props.contents != 'object') {
@@ -125,7 +162,7 @@ export class Pack extends React.Component {
 
         let chips = chipList.map((chip) => {
             return (
-                <Packchip chipName={chip.Name} chipCount={this.props.contents[chip.Name]} key={chip.Name}/>
+                <Packchip chipName={chip.Name} chipCount={this.props.contents[chip.Name]} key={chip.Name} />
             );
         });
         /*
@@ -137,34 +174,53 @@ export class Pack extends React.Component {
             )
         });
         */
-       let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
+        let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
-            <MDBContainer id="fullPack" className={packStatus} fluid>
-                <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                    <MDBCol size="2" className="debug Chip">
-                        NAME
+
+            <MDBContainer fluid className="nopadding">
+                <MDBRow>
+                    <MDBCol size="11" className="debug nopadding">
+                        <MDBContainer id="fullPack" className={packStatus} fluid>
+                            <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
+                                <MDBCol size="2" className="debug Chip nopadding">
+                                    NAME
                     </MDBCol>
-                    <MDBCol size="2" className="debug Chip">
-                        SKILL
+                                <MDBCol size="2" className="debug Chip nopadding">
+                                    SKILL
                     </MDBCol>
 
-                    <MDBCol size="2" className="debug Chip">
-                        DAMAGE
+                                <MDBCol size="2" className="debug Chip nopadding">
+                                    DAMAGE
                     </MDBCol>
-                    <MDBCol size="2" className="debug Chip">
-                        RANGE
+                                <MDBCol size="2" className="debug Chip nopadding">
+                                    RANGE
                     </MDBCol>
-                    <MDBCol size="1" className="debug Chip">
-                        HITS
+                                <MDBCol size="1" className="debug Chip nopadding">
+                                    HITS
                     </MDBCol>
-                    <MDBCol size="1" className="debug Chip">
+                                <MDBCol size="1" className="debug Chip nopadding">
 
+                                </MDBCol>
+                                <MDBCol size="1" className="debug Chip nopadding">
+                                #
+                                </MDBCol>
+                            </MDBRow>
+                            {chips}
+                        </MDBContainer>
                     </MDBCol>
-                    <MDBCol size="1" className="debug Chip">
-
+                    <MDBCol size="1" className="debug nopadding">
+                        <span unselectable="off">Sort By</span><br />
+                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
+                            <option value="Name">Name</option>
+                            <option value="Element">Element</option>
+                            <option value="MaxDamage">MaxDamage</option>
+                            <option value="AverageDamage">AverageDamage</option>
+                            <option value="Skill">Skill</option>
+                            <option value="Range">Range</option>
+                            <option value="Owned">Owned</option>
+                        </select>
                     </MDBCol>
                 </MDBRow>
-                {chips}
             </MDBContainer>
         );
     }
