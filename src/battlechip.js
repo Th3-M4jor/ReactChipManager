@@ -30,7 +30,7 @@ export class Packchip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div className={type + " noselect"}>
+                <div className={type + " noselect"} onDoubleClick={() => {this.props.doubleClickAction(chip.Name, this.props.folderNum)}}>
                     <MDBRow center>
                         <MDBCol size="2" className="debug nopadding">
                         <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>

@@ -113,11 +113,16 @@ export class Pack extends React.Component {
 
     state = {
         sortBy: "Name",
+        doubleClickAction: "remove"
     }
 
 
     sortSelectChanged(event) {
         this.setState({ sortBy: event.target.value });
+    }
+
+    doubleClickActionChanged(event) {
+        this.setState({doubleClickAction: event.target.value});
     }
 
     /**
@@ -160,9 +165,18 @@ export class Pack extends React.Component {
         }
         chipList.sort((a, b) => a.Name.localeCompare(b.Name));
 
+
+        let action;
+        if(this.state.doubleClickAction === "remove") {
+            action = this.props.removeCallback;
+        }
+        else {
+            action = this.props.addToFolderCallback;
+        }
+
         let chips = chipList.map((chip) => {
             return (
-                <Packchip chipName={chip.Name} chipCount={this.props.contents[chip.Name]} key={chip.Name} />
+                <Packchip chipName={chip.Name} chipCount={this.props.contents[chip.Name]} key={chip.Name} doubleClickAction={action} folderNum={this.state.doubleClickAction}/>
             );
         });
         /*
@@ -175,6 +189,14 @@ export class Pack extends React.Component {
         });
         */
         let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
+        let doubleClickOptions = [(
+            <option value="remove">Remove</option>
+        )];
+        for(let i = 0; i < this.props.numFolders; i++) {
+            doubleClickOptions.push(
+                <option value={i + ""}>{"Folder" + (i + 1)}</option>
+            );
+        }
         return (
 
             <MDBContainer fluid className="nopadding">
@@ -218,6 +240,14 @@ export class Pack extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                             <option value="Owned">Owned</option>
+                        </select>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <span unselectable="off">Double Click Action</span><br />
+                        <select value={this.state.doubleClickAction} onChange={(e) => {this.doubleClickActionChanged(e)}} style={{width: "100%"}}>
+                            {doubleClickOptions}
                         </select>
                     </MDBCol>
                 </MDBRow>

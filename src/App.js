@@ -12,8 +12,7 @@ class App extends React.Component {
     chipsLoaded: false,
     activeTab: "Pack",
     pack: {},
-    hand: [],
-    folder: [],
+    folders: [[]],
     updateText: "",
   }
 
@@ -26,8 +25,7 @@ class App extends React.Component {
         chipsLoaded: true,
         activeTab: "Library",
         pack: {},
-        hand: [],
-        folder: [],
+        folders: [[]],
         updateText: "",
       })
     });
@@ -60,9 +58,37 @@ class App extends React.Component {
         chipsLoaded: state.chipsLoaded,
         activeTab: state.activeTab,
         pack: state.pack,
-        hand: state.hand,
-        folder: state.folder,
+        folders: state.folders,
         updateText: `${state.pack[chipName]} ${chipName} total are now in your pack`,
+      }
+    });
+    this.modificationTimeout = setTimeout(() => {
+      this.setState({
+        updateText: "",
+      });
+    }, 15000);
+  }
+
+  /**
+   * 
+   * @param {string} chipName 
+   */
+  removeFromPack(chipName) {
+    clearTimeout(this.modificationTimeout);
+    this.setState((state, props) => {
+
+      if(state.pack[chipName] > 1) {
+        state.pack[chipName] -= 1;
+      } else {
+        delete state.pack[chipName];
+      }
+
+      return {
+        chipsLoaded: state.chipsLoaded,
+        activeTab: state.activeTab,
+        pack: state.pack,
+        folders: state.folders,
+        updateText: `A copy of ${chipName} has been removed from your pack`,
       }
     });
     this.modificationTimeout = setTimeout(() => {
@@ -77,6 +103,9 @@ class App extends React.Component {
     if (!this.state.chipsLoaded) {
       return null;
     }
+
+
+
     return (
       <MDBContainer style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "100%" }}>
         <div style={{ backgroundColor: "#ffbd18", fontFamily: "Lucida Console", margin: "5px", color: "#FFFFFF", fontWeight: "bold" }}>
@@ -85,11 +114,6 @@ class App extends React.Component {
         <Router>
             <div style={{ backgroundColor: "#4abdb5", padding: "10px"}}>
               <MDBNav className="nav-tabs" tabs header>
-                <MDBNavItem active={this.state.activeTab === "Hand"} className={this.state.activeTab === "Hand" ? "activeTab" : "inactiveTab"} tag="div">
-                  <MDBNavLink to="#" active={this.state.activeTab === "Hand"} onClick={this.toggle("Hand")} role="tab" >
-                    Hand
-            </MDBNavLink>
-                </MDBNavItem>
                 <MDBNavItem active={this.state.activeTab === "Folder1"} className={this.state.activeTab === "Folder1" ? "activeTab" : "inactiveTab"} tag="div">
                   <MDBNavLink to="#" active={this.state.activeTab === "Folder1"} onClick={this.toggle("Folder1")} role="tab">
                     Folder1
@@ -107,16 +131,6 @@ class App extends React.Component {
                 </MDBNavItem>
               </MDBNav>
               <MDBTabContent activeItem={this.state.activeTab}>
-                <MDBTabPane tabId="Hand" role="tabpanel">
-                  <MDBContainer>
-                    <div style={{
-                      borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "400px", overflowX: "scroll",
-                      fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", minHeight: "200px", maxHeight: "80vh"
-                    }}>
-
-                    </div>
-                  </MDBContainer>
-                </MDBTabPane>
                 <MDBTabPane tabId="Folder1" role="tabpanel">
                   <MDBContainer>
                     <div style={{
@@ -129,7 +143,9 @@ class App extends React.Component {
                 </MDBTabPane>
                 <MDBTabPane tabId="Pack" role="tabpanel">
                   <MDBContainer fluid>
-                    <Pack contents={this.state.pack} active={this.state.activeTab === "Pack"}/>
+
+                    <Pack contents={this.state.pack} removeCallback={(chipName) => {this.removeFromPack(chipName)}} addToFolderCallback={(chipName, folderNum) => {}} active={this.state.activeTab === "Pack"} numFolders={this.state.folders.length}/>
+
                   </MDBContainer>
                 </MDBTabPane>
                 <MDBTabPane tabId="Library" role="tabpanel">
