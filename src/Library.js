@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBContainer, } from 'mdbreact';
 // eslint-disable-next-line
-import { libraryAsArray, getChip, BattleChip } from './ChipLibrary';
+import { BattleChip } from './ChipLibrary';
 import { LibraryChip, Packchip } from './battlechip';
 import './App.css';
 import './Battlechip.css';
@@ -50,7 +50,7 @@ export class Library extends React.Component {
     }
 
     render() {
-        let chips = libraryAsArray();
+        let chips = BattleChip.libraryAsArray();
         chips = this.sortChips(chips);
         let toRender = chips.map((chip) => {
             return (
@@ -70,10 +70,10 @@ export class Library extends React.Component {
                                 <MDBCol size="2" className="debug Chip nopadding">
                                     SKILL
                         </MDBCol>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="1" className="debug Chip nopadding">
                                     DAMAGE
                         </MDBCol>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="1" className="debug Chip nopadding">
                                     RANGE
                         </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
@@ -151,8 +151,8 @@ export class Pack extends React.Component {
 
 
         /**@type {BattleChip[]} */
-        let chipList = libraryAsArray().filter((chip) => {
-            return (chip.Owned - chip.InFolder) > 0;
+        let chipList = BattleChip.libraryAsArray().filter((chip) => {
+            return chip.Owned > 0;
         });
         
         this.sortChips(chipList);
@@ -175,7 +175,7 @@ export class Pack extends React.Component {
         let packStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
 
-            <MDBContainer fluid className="nopadding">
+            <MDBContainer fluid>
                 <MDBRow>
                     <MDBCol size="11" className="debug nopadding">
                         <MDBContainer id="fullPack" className={packStatus} fluid>
@@ -190,7 +190,7 @@ export class Pack extends React.Component {
                                 <MDBCol size="1" className="debug Chip nopadding">
                                     DAMAGE
                     </MDBCol>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="1" className="debug Chip nopadding">
                                     RANGE
                     </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">

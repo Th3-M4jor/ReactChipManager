@@ -4,7 +4,8 @@ import { MDBContainer, MDBNav, MDBNavItem, MDBNavLink, MDBTabContent, MDBTabPane
 import './App.css';
 import './Battlechip.css';
 import { Library, Pack } from './Library';
-import { loadChips } from './ChipLibrary';
+import { BattleChip } from './ChipLibrary';
+import { Folder } from './Folder';
 
 
 class App extends React.Component {
@@ -17,7 +18,7 @@ class App extends React.Component {
   modificationTimeout = null;
 
   componentDidMount() {
-    loadChips().then(() => {
+    BattleChip.loadChips().then(() => {
       this.setState({
         chipsLoaded: true,
         activeTab: "Library",
@@ -128,9 +129,9 @@ class App extends React.Component {
         <Router>
             <div style={{ backgroundColor: "#4abdb5", padding: "10px"}}>
               <MDBNav className="nav-tabs" tabs header>
-                <MDBNavItem active={this.state.activeTab === "Folder1"} className={this.state.activeTab === "Folder1" ? "activeTab" : "inactiveTab"} tag="div">
-                  <MDBNavLink to="#" active={this.state.activeTab === "Folder1"} onClick={this.toggle("Folder1")} role="tab">
-                    Folder1
+                <MDBNavItem active={this.state.activeTab === "Folder"} className={this.state.activeTab === "Folder" ? "activeTab" : "inactiveTab"} tag="div">
+                  <MDBNavLink to="#" active={this.state.activeTab === "Folder"} onClick={this.toggle("Folder")} role="tab">
+                    Folder
             </MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem active={this.state.activeTab === "Pack"} className={this.state.activeTab === "Pack" ? "activeTab" : "inactiveTab"} tag="div">
@@ -145,22 +146,19 @@ class App extends React.Component {
                 </MDBNavItem>
               </MDBNav>
               <MDBTabContent activeItem={this.state.activeTab}>
-                <MDBTabPane tabId="Folder1" role="tabpanel">
-                  <MDBContainer>
-                    <div style={{
-                      borderRadius: "8px", backgroundColor: "#00637b", textAlign: "center", paddingLeft: "3px", paddingRight: "1px", minWidth: "400px", overflowX: "scroll",
-                      fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", minHeight: "200px", maxHeight: "80vh"
-                    }}>
-
-                    </div>
-                  </MDBContainer>
+                <MDBTabPane tabId="Folder" role="tabpanel">
+                  
+                    
+                    <Folder active={this.state.activeTab === "Folder"} msgCallback={(msg) => {this.setMessage(msg)}}/>
+                    
+                  
                 </MDBTabPane>
                 <MDBTabPane tabId="Pack" role="tabpanel">
-                  <MDBContainer fluid>
+                  
 
                     <Pack contents={this.state.pack} active={this.state.activeTab === "Pack"} msgCallback={(msg) => this.setMessage(msg)}/>
 
-                  </MDBContainer>
+                 
                 </MDBTabPane>
                 <MDBTabPane tabId="Library" role="tabpanel">
                   

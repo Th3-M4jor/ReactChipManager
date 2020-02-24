@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
 import { ElementImage } from "./ElementImage";
-import { getChip } from "./ChipLibrary";
+import { BattleChip } from "./ChipLibrary";
 import "./Battlechip.css"
 
 
@@ -14,7 +14,7 @@ export class Packchip extends React.Component {
             throw new Error("chipName not set");
         }
 
-        let chip = getChip(this.props.chipName.toLocaleLowerCase());
+        let chip = BattleChip.getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
         switch (chip.Type) {
             case "Giga":
@@ -61,7 +61,7 @@ export class Packchip extends React.Component {
                         <MDBCol size="1" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="1" className="debug nopadding">
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding">
@@ -71,7 +71,7 @@ export class Packchip extends React.Component {
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding">
-                            {chip.Owned - chip.InFolder}
+                            {chip.Owned}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding">
                             {chip.Used}
@@ -94,7 +94,7 @@ export class LibraryChip extends React.Component {
             throw new Error("missing chipName");
         }
 
-        let chip = getChip(this.props.chipName.toLocaleLowerCase());
+        let chip = BattleChip.getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
         switch (chip.Type) {
             case "Giga":
@@ -119,10 +119,10 @@ export class LibraryChip extends React.Component {
                             {chip.Skill}
                         </MDBCol>
 
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="1" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
-                        <MDBCol size="2" className="debug centercontent nopadding">
+                        <MDBCol size="1" className="debug centercontent nopadding">
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding centercontent">

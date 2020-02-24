@@ -16,6 +16,13 @@ const URL = "https://spartan364.hopto.org/chips.json";
  * 
  */
 
+/**
+ * @typedef FolderChipObj
+ * @type {object}
+ * @property {string} Name
+ * @property {boolean} Used
+ */
+
 
 const damageRegex = /(\d+)d(\d+)/;
 
@@ -63,14 +70,26 @@ const chipTypeEnum = {
     Dark: 3,
 }
 
+
 /**
  * @class BattleChip represents a full battlechip's data
  */
 export class BattleChip {
-    
 
-    /** @private */static _NUM_IN_FOLDER = 0;
     /** @private */static _FOLDER_LIMIT = 10;
+
+    /**
+     * @private
+     * @type {FolderChipObj[]}
+     */
+    static _FOLDER = [];
+
+
+    /** @private
+     * @type {Map<string, BattleChip>}
+     */
+    static _library = new Map();
+
 
     static getFolderSize() {
         return BattleChip._FOLDER_LIMIT;
@@ -81,9 +100,45 @@ export class BattleChip {
      * @param {number} newSize 
      */
     static setFolderSize(newSize) {
-        if(newSize < BattleChip._NUM_IN_FOLDER) {
+        if (newSize < BattleChip._FOLDER.length) {
             throw new Error("You must remove chips from your folder before you can lower this number");
         }
+    }
+
+    static getFolder() {
+        return BattleChip._FOLDER;
+    }
+
+    static async loadChips() {
+        BattleChip._library.clear();
+        let body = await fetch(URL);
+        let result = await body.json();
+        result.forEach(chip => {
+            BattleChip._library.set(chip.Name.toLocaleLowerCase(), new BattleChip(chip));
+        });
+        return true;
+    }
+
+    /**
+     * @returns {BattleChip[]} an array of all battlechips
+     */
+    static libraryAsArray() {
+    return [...BattleChip._library.values()];
+}
+
+    /**
+    * 
+    * @param {string} name
+    * 
+    * @returns {BattleChip} a battlechip if there is one
+    * 
+    * @throws if an improper chip name was used
+    */
+    static getChip(name) {
+        if (!BattleChip._library.has(name?.toLocaleLowerCase())) {
+            throw new Error("Bad chip name");
+        }
+        return BattleChip._library.get(name.toLocaleLowerCase());
     }
 
     /**
@@ -134,7 +189,6 @@ export class BattleChip {
 
         /** @private */this._owned = 0;
         /** @private */this._used = 0;
-        /** @private */this._inFolder = 0;
 
     }
 
@@ -203,7 +257,7 @@ export class BattleChip {
      * @param {number} newCt
      */
     set Owned(newCt) {
-        if(newCt < this._used) {
+        if (newCt < this._used) {
             this._used = newCt;
         }
         this._owned = newCt;
@@ -213,14 +267,10 @@ export class BattleChip {
      * @param {number} newCt
      */
     set Used(newCt) {
-        if(newCt > this._owned) {
+        if (newCt > this._owned) {
             throw new Error("Cannot set used count higher than owned count");
         }
         this._used = newCt;
-    }
-
-    get InFolder() {
-        return this._inFolder;
     }
 
     /**
@@ -231,50 +281,38 @@ export class BattleChip {
     }
 
     addToFolder() {
-        let unused = this._owned - this._used - this._inFolder;
-        if(unused > 0 && BattleChip._FOLDER_LIMIT > BattleChip._NUM_IN_FOLDER) {
-            this._inFolder++;
-            BattleChip._NUM_IN_FOLDER++;
+        let unused = this._owned - this._used;
+        if (unused > 0 && BattleChip._FOLDER_LIMIT > BattleChip._FOLDER.length) {
+            BattleChip._FOLDER.push({ Name: this.Name, Used: false });
+            this._owned--;
         } else {
-            throw new Error("Cannot add that to your folder, either not enough unused, or too many in your folder or your folder has too many chips already");
+            throw new Error("Cannot add that to your folder, either not enough unused, too many in your folder, or your folder has too many chips already");
+        }
+    }
+
+    /**
+     * Remove a specified chip from the folder and return it to the pack, as used or unused
+     * 
+     * @param {string} name 
+     * @param {boolean} used
+     */
+    static returnToFolder(name, used) {
+        let chipIndex = -1;
+        for(let i = 0; i < BattleChip._FOLDER.length; i++) {
+            if(BattleChip._FOLDER[i].Name === name) {
+                chipIndex = i;
+            }
+        }
+        if(chipIndex < 0) {
+            throw new Error("Could not find specified chip");
+        }
+        BattleChip._FOLDER.splice(chipIndex, 1);
+        let chip = BattleChip.getChip(name);
+        chip.Owned++;
+        if(used) {
+            chip.Used++;
         }
     }
 
 
-}
-
-/**@type {Map<string, BattleChip>} */
-var library = new Map();
-
-
-export async function loadChips() {
-    library.clear();
-    let body = await fetch(URL);
-    let result = await body.json();
-    result.forEach(chip => {
-        library.set(chip.Name.toLocaleLowerCase(), new BattleChip(chip));
-    });
-    return true;
-}
-
-/**
- * 
- * @param {string} name
- * 
- * @returns {BattleChip} a battlechip if there is one
- * 
- * @throws if an improper chip name was used
- */
-export function getChip(name) {
-    if (!library.has(name?.toLocaleLowerCase())) {
-        throw new Error("Bad chip name");
-    }
-    return library.get(name.toLocaleLowerCase());
-}
-
-/**
- * @returns {BattleChip[]} an array of all battlechips
- */
-export function libraryAsArray() {
-    return [...library.values()];
 }
