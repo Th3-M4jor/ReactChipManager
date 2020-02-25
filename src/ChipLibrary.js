@@ -156,7 +156,7 @@ export class BattleChip {
         });
         /** @private */this._skills = chipObj.Skills;
 
-            if(this._skills[0] == "None") {
+            if(this._skills[0] === "None") {
                 this._skills[0] = "--";
             }
         /** @private */this._range = chipObj.Range;
