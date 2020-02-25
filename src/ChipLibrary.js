@@ -103,6 +103,7 @@ export class BattleChip {
         if (newSize < BattleChip._FOLDER.length) {
             throw new Error("You must remove chips from your folder before you can lower this number");
         }
+        BattleChip._FOLDER_LIMIT = newSize;
     }
 
     static getFolder() {
@@ -296,7 +297,7 @@ export class BattleChip {
      * @param {string} name 
      * @param {boolean} used
      */
-    static returnToFolder(name, used) {
+    static returnToPack(name, used) {
         let chipIndex = -1;
         for(let i = 0; i < BattleChip._FOLDER.length; i++) {
             if(BattleChip._FOLDER[i].Name === name) {
@@ -312,6 +313,31 @@ export class BattleChip {
         if(used) {
             chip.Used++;
         }
+    }
+
+    /**
+     * 
+     * @param {number} index 
+     */
+    static returnToPackByIndex(index) {
+        let chip = BattleChip._FOLDER.splice(index, 1)[0];
+        let packChip = BattleChip.getChip(chip.Name);
+        packChip.Owned++;
+        if(chip.Used) {
+            packChip.Used++;
+        }
+    }
+
+    /**
+     * reset all used chips to unused
+     */
+    static jackOut() {
+        BattleChip._FOLDER.forEach((chip) => {
+            chip.Used = false;
+        });
+        BattleChip._library.forEach((chip) => {
+            chip.Used = 0;
+        });
     }
 
 

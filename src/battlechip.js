@@ -51,7 +51,7 @@ export class Packchip extends React.Component {
             <MDBTooltip domElement>
                 <div className={type + " noselect"} onDoubleClick={action}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="3" className="debug nopadding">
                         <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2" className="debug nopadding">
@@ -112,7 +112,7 @@ export class LibraryChip extends React.Component {
             <MDBTooltip domElement>
                 <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect"}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2" className="debug nopadding">

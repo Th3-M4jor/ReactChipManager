@@ -15,25 +15,14 @@ function cmp(a, b) {
 
 class FolderChip extends React.Component {
     
-    constructor(props) {
-        super(props);
-        this.state = {used: this.props.used};
-    }
-    
     usedChanged() {
-        this.setState((state) => {
-           return {
-               used: !state.used,
-           }  
-        });
+        BattleChip.getFolder()[this.props.folderIndex].Used = !BattleChip.getFolder()[this.props.folderIndex].Used;
+        this.forceUpdate();
     }
 
     render() {
-        if (!this.props.chipName) {
-            throw new Error("missing chipName");
-        }
-
-        let chip = BattleChip.getChip(this.props.chipName.toLocaleLowerCase());
+        let folderChip = BattleChip.getFolder()[this.props.folderIndex];
+        let chip = BattleChip.getChip(folderChip.Name);
         let type = "";
         switch (chip.Type) {
             case "Giga":
@@ -49,9 +38,9 @@ class FolderChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { BattleChip.returnToFolder(chip.Name, this.state.used); this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect"}>
+                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect"}>
                     <MDBRow center>
-                        <MDBCol size="2" className="debug nopadding">
+                        <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2" className="debug nopadding">
@@ -74,7 +63,7 @@ class FolderChip extends React.Component {
                         <input
                             name="chipUsed"
                             type="checkbox"
-                            checked={this.state.used}
+                            checked={folderChip.Used}
                             onChange={() => {this.usedChanged()}} />
                         </MDBCol>
                     </MDBRow>
@@ -94,8 +83,12 @@ class FolderChip extends React.Component {
 
 export class Folder extends React.Component {
 
-    state = {
-        sortBy: "Name",
+    constructor(props) {
+        super(props);
+        this.state = {
+            sortBy: "Name",
+            folderLimit: BattleChip.getFolderSize(),
+        }
     }
 
 
@@ -131,26 +124,26 @@ export class Folder extends React.Component {
     render() {
         let chips = BattleChip.getFolder();
         chips = this.sortChips(chips);
-        let toRender = chips.map((chip) => {
+        let toRender = chips.map(( _ , index) => {
             return (
-                <FolderChip chipName={chip.Name} used={chip.Used} msgCallback={this.props.msgCallback} />
+                <FolderChip folderIndex={index} msgCallback={this.props.msgCallback}/>
             );
         });
         let folderStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
             <MDBContainer fluid>
                 <MDBRow>
-                    <MDBCol size="11" className="debug nopadding">
+                    <MDBCol size="10" className="debug nopadding">
                         <MDBContainer className={folderStatus} id="folder1" fluid>
                             <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="3" className="debug Chip nopadding">
                                     <span style={{ whiteSpace: "nowrap" }}>NAME</span>
                                 </MDBCol>
                                 <MDBCol size="2" className="debug Chip nopadding">
                                     SKILL
                         </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                    DAMAGE
+                                    DMG
                         </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
                                     RANGE
@@ -168,8 +161,23 @@ export class Folder extends React.Component {
                             {toRender}
                         </MDBContainer>
                     </MDBCol>
-                    <MDBCol size="1" className="debug nopadding">
-                        <span unselectable="on">Sort By</span><br />
+                    <MDBCol size="2" className="debug nopadding">
+                        <span unselectable="on" className="Chip">Chip Limit</span>
+                        <input
+                            style={{width: "100%"}}
+                            type="number"
+                            name="folderLimit"
+                            value={this.state.folderLimit}
+                            step="1"
+                            min={BattleChip.getFolder().length}
+                            max="100"
+                            onChange={(e) => {BattleChip.setFolderSize(e.target.valueAsNumber); this.setState({folderLimit: BattleChip.getFolderSize()});}}
+                        />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <span unselectable="on" className="Chip">Sort By</span><br />
                         <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
@@ -178,6 +186,10 @@ export class Folder extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                         </select>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
 
                     </MDBCol>
                 </MDBRow>

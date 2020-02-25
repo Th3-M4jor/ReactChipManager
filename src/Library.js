@@ -61,17 +61,17 @@ export class Library extends React.Component {
         return (
             <MDBContainer fluid>
                 <MDBRow>
-                    <MDBCol size="11" className="debug nopadding">
+                    <MDBCol size="10" className="debug nopadding">
                         <MDBContainer className={libraryStatus} id="fullLibrary" fluid>
                             <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="3" className="debug Chip nopadding">
                                     <span style={{ whiteSpace: "nowrap" }}>NAME</span>
                                 </MDBCol>
                                 <MDBCol size="2" className="debug Chip nopadding">
                                     SKILL
                         </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                    DAMAGE
+                                    DMG
                         </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
                                     RANGE
@@ -86,8 +86,8 @@ export class Library extends React.Component {
                             {toRender}
                         </MDBContainer>
                     </MDBCol>
-                    <MDBCol size="1" className="debug nopadding">
-                        <span unselectable="on">Sort By</span><br />
+                    <MDBCol size="2" className="debug nopadding">
+                        <span unselectable="on" className="Chip">Sort By</span><br />
                         <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
@@ -109,7 +109,7 @@ export class Pack extends React.Component {
 
     state = {
         sortBy: "Name",
-        doubleClickAction: "remove"
+        doubleClickAction: "folder"
     }
 
 
@@ -177,10 +177,10 @@ export class Pack extends React.Component {
 
             <MDBContainer fluid>
                 <MDBRow>
-                    <MDBCol size="11" className="debug nopadding">
+                    <MDBCol size="10" className="debug nopadding">
                         <MDBContainer id="fullPack" className={packStatus} fluid>
                             <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
-                                <MDBCol size="2" className="debug Chip nopadding">
+                                <MDBCol size="3" className="debug Chip nopadding">
                                     NAME
                     </MDBCol>
                                 <MDBCol size="2" className="debug Chip nopadding">
@@ -188,7 +188,7 @@ export class Pack extends React.Component {
                     </MDBCol>
 
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                    DAMAGE
+                                    DMG
                     </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
                                     RANGE
@@ -200,7 +200,7 @@ export class Pack extends React.Component {
 
                                 </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                #
+                                OWN
                                 </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
                                 USED
@@ -209,8 +209,8 @@ export class Pack extends React.Component {
                             {chips}
                         </MDBContainer>
                     </MDBCol>
-                    <MDBCol size="1" className="debug nopadding">
-                        <span unselectable="off">Sort By</span><br />
+                    <MDBCol size="2" className="debug nopadding">
+                        <span unselectable="off" className="Chip">Sort By</span><br />
                         <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
@@ -224,10 +224,10 @@ export class Pack extends React.Component {
                         <br />
                         <br />
                         <br />
-                        <span unselectable="off">Double Click Action</span><br />
+                        <span unselectable="off" className="Chip">On Double Click</span><br />
                         <select value={this.state.doubleClickAction} onChange={(e) => {this.doubleClickActionChanged(e)}} style={{width: "100%"}}>
-                            <option value="remove">Remove</option>
                             <option value="folder">Folder</option>
+                            <option value="remove">Remove</option>
                         </select>
                     </MDBCol>
                 </MDBRow>

@@ -1,16 +1,17 @@
-.Folder {
+div.Folder {
     border-radius: 8px;
     background-color: #00637b;
     text-align: center;
     padding-left: 0px;
     padding-right: 0px;
-    min-width: 400px;
+    width: 100%;
     overflow-y: scroll;
     font-family: "Lucida Console";
     font-weight: bold;
     font-size: 16px;
     color: white;
     height: 80vh;
+    overflow-x: hidden;
 }
 
 .activefolder {
