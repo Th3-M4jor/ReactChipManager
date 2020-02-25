@@ -155,6 +155,10 @@ export class BattleChip {
             return elementsEnum[elem];
         });
         /** @private */this._skills = chipObj.Skills;
+
+            if(this._skills[0] == "None") {
+                this._skills[0] = "--";
+            }
         /** @private */this._range = chipObj.Range;
         /** @private */this._damage = chipObj.Damage;
         /** @private */this._type = chipObj.Type;
