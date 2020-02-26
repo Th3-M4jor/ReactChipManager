@@ -6,6 +6,7 @@ import { ElementImage } from "./ElementImage";
 import './App.css';
 import './Battlechip.css';
 
+
 function cmp(a, b) {
     if (a > b) return +1;
     if (a < b) return -1;
@@ -38,7 +39,7 @@ class FolderChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect"}>
+                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect chipHover"}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>

@@ -2,7 +2,8 @@ import React from 'react';
 import { MDBRow, MDBCol, MDBTooltip } from 'mdbreact';
 import { ElementImage } from "./ElementImage";
 import { BattleChip } from "./ChipLibrary";
-import "./Battlechip.css"
+import "./Battlechip.css";
+import "./App.css";
 
 
 
@@ -49,7 +50,7 @@ export class Packchip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div className={type + " noselect"} onDoubleClick={action}>
+                <div className={type + " noselect chipHover"} onDoubleClick={action}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                         <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>
@@ -110,7 +111,7 @@ export class LibraryChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect"}>
+                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect chipHover"}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>

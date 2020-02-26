@@ -56,3 +56,7 @@
 img {
     height: 100%;
 }
+
+.chipHover:hover {
+    background-color: rgb(132, 180, 36);
+}
