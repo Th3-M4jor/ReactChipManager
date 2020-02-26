@@ -190,7 +190,15 @@ export class Folder extends React.Component {
                         <br />
                         <br />
                         <br />
-
+                        <div className="centerContent">
+                        <button onClick={() => {
+                            let count = BattleChip.jackOut();
+                            this.props.msgCallback(`${count} chips have been marked as unused`);
+                            }}
+                        >
+                            Jack Out
+                            </button>
+                        </div>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

@@ -96,7 +96,6 @@ export class Library extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                         </select>
-
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
@@ -229,6 +228,18 @@ export class Pack extends React.Component {
                             <option value="folder">Folder</option>
                             <option value="remove">Remove</option>
                         </select>
+
+                        <br/>
+                        <br/>
+                        <div className="centerContent">
+                        <button onClick={() => {
+                            let count = BattleChip.jackOut();
+                            this.props.msgCallback(`${count} chips have been marked as unused`);
+                            }}
+                        >
+                            Jack Out
+                            </button>
+                        </div>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

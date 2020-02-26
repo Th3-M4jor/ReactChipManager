@@ -52,66 +52,7 @@ class App extends React.Component {
     }, 15000);
   }
 
-  /**
-   * 
-   * @param {string} chipName 
-   */
-  /*
-  addToPack(chipName) {
-    clearTimeout(this.modificationTimeout);
-    this.setState((state, props) => {
-      if (typeof state.pack[chipName] != 'number') {
-        state.pack[chipName] = 1;
-      } else {
-        state.pack[chipName] += 1;
-      }
-      return {
-        chipsLoaded: state.chipsLoaded,
-        activeTab: state.activeTab,
-        pack: state.pack,
-        usedPack: state.usedPack,
-        folders: state.folders,
-        updateText: `${state.pack[chipName]} ${chipName} total are now in your pack`,
-      }
-    });
-    this.modificationTimeout = setTimeout(() => {
-      this.setState({
-        updateText: "",
-      });
-    }, 15000);
-  }
-  */
 
-  /**
-   * 
-   * @param {string} chipName 
-   */
-  /*
-  removeFromPack(chipName) {
-    clearTimeout(this.modificationTimeout);
-    this.setState((state, props) => {
-
-      if(state.pack[chipName] > 1) {
-        state.pack[chipName] -= 1;
-      } else {
-        delete state.pack[chipName];
-      }
-
-      return {
-        chipsLoaded: state.chipsLoaded,
-        activeTab: state.activeTab,
-        pack: state.pack,
-        usedPack: state.usedPack,
-        folders: state.folders,
-        updateText: `A copy of ${chipName} has been removed from your pack`,
-      }
-    });
-    this.modificationTimeout = setTimeout(() => {
-      this.setState({
-        updateText: "",
-      });
-    }, 15000);
-  } */
 
   render() {
 
