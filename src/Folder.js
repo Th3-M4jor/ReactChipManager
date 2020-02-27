@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn} from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn,} from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
@@ -183,10 +183,8 @@ export class Folder extends React.Component {
                         />
                         <br />
                         <br />
-                        <br />
-                        <br />
                         <span unselectable="on" className="Chip">Sort By</span><br />
-                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
+                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
                             <option value="MaxDamage">MaxDamage</option>
@@ -194,8 +192,6 @@ export class Folder extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                         </select>
-                        <br />
-                        <br />
                         <br />
                         <br />
                         <div className="centerContent">

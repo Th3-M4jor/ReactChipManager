@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBBtn } from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBBtn, } from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { LibraryChip, Packchip } from './battlechip';
@@ -88,7 +88,7 @@ export class Library extends React.Component {
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">
                         <span unselectable="on" className="Chip">Sort By</span><br />
-                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
+                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
                             <option value="MaxDamage">MaxDamage</option>
@@ -242,7 +242,7 @@ export class Pack extends React.Component {
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">
                         <span unselectable="off" className="Chip">Sort By</span><br />
-                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }}>
+                        <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="Name">Name</option>
                             <option value="Element">Element</option>
                             <option value="MaxDamage">MaxDamage</option>
@@ -256,7 +256,7 @@ export class Pack extends React.Component {
                         <br />
                         <br />
                         <span unselectable="off" className="Chip">On Double Click</span><br />
-                        <select value={this.state.doubleClickAction} onChange={(e) => { this.doubleClickActionChanged(e) }} style={{ width: "100%" }}>
+                        <select value={this.state.doubleClickAction} onChange={(e) => { this.doubleClickActionChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="folder">Folder</option>
                             <option value="remove">Remove</option>
                         </select>

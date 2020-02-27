@@ -112,10 +112,8 @@ class App extends React.Component {
               </MDBNav>
               <MDBTabContent activeItem={this.state.activeTab}>
                 <MDBTabPane tabId="Folder" role="tabpanel">
-                  
                     
                     <Folder active={this.state.activeTab === "Folder"} msgCallback={(msg) => {this.setMessage(msg)}} modalOpen={(msg, callback) => {this.openModal(msg, callback)}}/>
-                    
                   
                 </MDBTabPane>
                 <MDBTabPane tabId="Pack" role="tabpanel">
@@ -149,19 +147,4 @@ class App extends React.Component {
   }
 }
 
-/*
- 
- <div style={{ backgroundColor: "#4abdb5", textAlign: "right", padding: "10px" }}>
-            Pack
-        <div style={{
-              borderRadius: "8px", backgroundColor: "#00637b", textAlign: "left", paddingLeft: "3px", paddingRight: "1px",
-              fontFamily: "Lucida Console", fontWeight: "bold", fontSize: "16px", color: "white", overflowY: "scroll", maxHeight: "500px", minHeight: "200px"
-            }}>
-
-
-              <Battlechip chipName="FireSword" />
-            </div>
-          </div>
-
- */
 export default App;
