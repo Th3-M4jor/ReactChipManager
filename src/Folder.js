@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBTooltip} from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn} from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
@@ -199,16 +199,16 @@ export class Folder extends React.Component {
                         <br />
                         <br />
                         <div className="centerContent">
-                        <button onClick={() => {
+                        <MDBBtn onClick={() => {
                             let count = BattleChip.jackOut();
                             this.props.msgCallback(`${count} chips have been marked as unused`);
-                            }}
+                            }} color="blue-grey"
                         >
                             Jack Out
-                            </button>
-                        <button onClick={() => {this.emptyFolder()}}>
+                            </MDBBtn>
+                        <MDBBtn onClick={() => {this.emptyFolder()}} color="blue-grey">
                             Empty Folder
-                        </button>
+                        </MDBBtn>
                         </div>
                     </MDBCol>
                 </MDBRow>

@@ -143,6 +143,13 @@ export class BattleChip {
 
     static async loadChips() {
 
+        window.addEventListener("beforeunload", function (e) {
+            let confirmationMessage = 'Progress might be lost if you leave without saving an export.';
+          
+            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+          });
+
         BattleChip._library.clear();
         let body = await fetch(URL);
         let result = await body.json();

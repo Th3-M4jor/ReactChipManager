@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, } from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBBtn } from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { LibraryChip, Packchip } from './battlechip';
@@ -264,25 +264,25 @@ export class Pack extends React.Component {
                         <br />
                         <br />
                         <div className="centerContent">
-                            <button onClick={() => {
+                            <MDBBtn onClick={() => {
                                 let count = BattleChip.jackOut();
                                 this.props.msgCallback(`${count} chips have been marked as unused`);
-                            }}
+                            }} color="blue-grey"
                             >
                                 Jack Out
-                            </button>
-                            <button onClick={() => { BattleChip.exportJSON() }}>
+                            </MDBBtn>
+                            <MDBBtn onClick={() => { BattleChip.exportJSON() }} color="blue-grey">
                                 Export JSON
-                        </button>
-                            <button onClick={() => { BattleChip.exportText() }}>
+                        </MDBBtn>
+                            <MDBBtn onClick={() => { BattleChip.exportText() }} color="blue-grey">
                                 Export TXT
-                        </button>
-                            <button onClick={() => { this.eraseData() }}>
+                        </MDBBtn>
+                            <MDBBtn onClick={() => { this.eraseData() }} color="blue-grey">
                                 Erase Data
-                        </button>
-                            <button onClick={() => { this.importData() }}>
+                        </MDBBtn>
+                            <MDBBtn onClick={() => { this.importData() }} color="blue-grey">
                                 Import Data
-                        </button>
+                        </MDBBtn>
                         </div>
                         <input id="jsonFile" type="file" ref={(ref) => this.upload = ref} style={{ display: 'none' }} accept=".json" onChange={() => {this.importFileGet()}}/>
                     </MDBCol>
