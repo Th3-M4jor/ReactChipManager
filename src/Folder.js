@@ -98,6 +98,13 @@ export class Folder extends React.Component {
     }
 
 
+    emptyFolder() {
+        this.props.modalOpen("Are you sure you want to empty your folder?", () => {
+            let count = BattleChip.emptyFolder();
+            this.props.msgCallback(`${count} chips have been returned to your pack`);
+        });
+    }
+
     /**
      * @private
      * @param {FolderChipObj[]} list
@@ -199,6 +206,9 @@ export class Folder extends React.Component {
                         >
                             Jack Out
                             </button>
+                        <button onClick={() => {this.emptyFolder()}}>
+                            Empty Folder
+                        </button>
                         </div>
                     </MDBCol>
                 </MDBRow>

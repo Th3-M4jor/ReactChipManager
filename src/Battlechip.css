@@ -42,11 +42,14 @@
 }
 
 .activeTab {
-    background-color: blue;
+    background-color: grey !important;
+    color: white !important;
+    border-bottom: 0px !important;
 }
 
 .inactiveTab {
-    color: white;
+    background-color: white !important;
+    color: blue !important;
 }
 
 .centerContent {

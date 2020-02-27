@@ -1,3 +1,7 @@
+import { saveAs } from "file-saver";
+
+
+
 const URL = "https://spartan364.hopto.org/chips.json";
 
 
@@ -191,17 +195,90 @@ export class BattleChip {
         return true;
     }
 
+    /**
+     * Return all chips from you folder to your pack
+     * 
+     * @returns {number} the number of chips removed
+     */
+    static emptyFolder() {
+        let toRet = BattleChip._FOLDER.length;
+        while (BattleChip._FOLDER.length !== 0) {
+            let removedChip = BattleChip._FOLDER.shift();
+            let packChip = BattleChip.getChip(removedChip.Name);
+            packChip.Owned++;
+            if (removedChip.Used) {
+                packChip.Used++;
+            }
+        }
+        return toRet;
+    }
+
     static saveChips() {
+        if (!BattleChip._SAVE_ON_INTERVAL) return;
         let folder = JSON.stringify(BattleChip._FOLDER);
         let packArr = [];
         BattleChip._library.forEach((chip) => {
-            if(chip.Owned > 0) {
+            if (chip.Owned > 0) {
                 packArr.push({ Name: chip._name, Owned: chip._owned, Used: chip._used });
             }
         });
         let pack = JSON.stringify(packArr);
         window.localStorage.setItem('pack', pack);
         window.localStorage.setItem('folder', folder);
+    }
+
+    static exportJSON() {
+        BattleChip.saveChips();
+        let packArr = [];
+        BattleChip._library.forEach((chip) => {
+            if (chip.Owned > 0) {
+                packArr.push({ Name: chip._name, Owned: chip._owned, Used: chip._used });
+            }
+        });
+
+        let toSave = JSON.stringify({ Folder: BattleChip._FOLDER, Limit: BattleChip._FOLDER_LIMIT, Pack: packArr }, null, '\t');
+        let blob = new Blob([toSave], { type: "application/json;charset=utf-8" });
+        saveAs(blob, "pack.json");
+    }
+
+    static exportText() {
+        BattleChip.saveChips();
+        let text = "Folder: ";
+        BattleChip._FOLDER.forEach((chip) => {
+            text += chip.Name;
+            if (chip.Used) {
+                text += " (Used), ";
+            } else {
+                text += ", ";
+            }
+        });
+        text = text.slice(0, -2);
+        text += "\nPack: ";
+        let packArr = [];
+        BattleChip._library.forEach((chip) => {
+            if (chip.Owned > 0) {
+                packArr.push({ Name: chip._name, Owned: chip._owned, Used: chip._used });
+            }
+        });
+
+        packArr.forEach((chip) => {
+            text += chip.Name;
+            if (chip.Owned > 1) {
+                text += ` x${chip.Owned}`;
+            }
+
+            if (chip.Used === 1 && chip.Owned === 1) {
+                text += " (Used)";
+            } else if (chip.Used > 0) {
+                text += ` (${chip.Used} Used)`;
+            }
+            text += ", ";
+        });
+
+        text = text.slice(0, -2);
+        let blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "pack.txt");
+
     }
 
 
@@ -211,8 +288,66 @@ export class BattleChip {
             chip.Used = 0;
             chip.Owned = 0;
         });
-        window.localStorage.removeItem('pack');
-        window.localStorage.removeItem('folder');
+        if (BattleChip._SAVE_ON_INTERVAL) {
+            window.localStorage.removeItem('pack');
+            window.localStorage.removeItem('folder');
+        }
+    }
+
+    /**
+     * 
+     * @param {string} data a json to parse and convert to your folder, and pack 
+     * 
+     * @return {boolean | number} returns the number of chips now in your pack, or false if it failed to parse the text
+     */
+    static importChips(data) {
+
+        let pack;
+        try {
+            pack = JSON.parse(data);
+            if (!Array.isArray(pack.Folder) || typeof pack.Limit !== "number" || !Array.isArray(pack.Pack)) {
+                return false;
+            }
+        } catch (e) {
+            return false;
+        }
+        BattleChip.unloadChips();
+        BattleChip._FOLDER_LIMIT = pack.Limit;
+        let num = 0;
+        try {
+            pack.Pack.forEach((chip) => {
+                if (typeof chip !== "object" || typeof chip.Name !== "string" || typeof chip.Owned !== "number" || typeof chip.Used !== "number") {
+                    alert("Save appears to be improperly formatted, aborting");
+                    throw new Error();
+                }
+                if (BattleChip._library.has(chip.Name.toLocaleLowerCase())) {
+                    let battlechip = BattleChip._library.get(chip.Name.toLocaleLowerCase());
+                    battlechip.Owned = chip.Owned;
+                    battlechip.Used = chip.Used;
+                    num += chip.Owned;
+                } else {
+                    alert(`The chip ${chip.Name} no longer exists in the library, cannot add it to your pack, you owned ${chip.Owned} of them`);
+                }
+            });
+
+            pack.Folder.forEach((chip) => {
+                if (typeof chip !== "object" || typeof chip.Name !== "string" || typeof chip.Used !== "boolean") {
+                    alert("Save appears to be improperly formatted, aborting");
+                    throw new Error();
+                }
+
+                if (BattleChip._library.has(chip.Name.toLocaleLowerCase())) {
+                    BattleChip._FOLDER.push({ Name: chip.Name, Used: chip.Used });
+                    num += chip.Owned;
+                }
+                else {
+                    alert(`The chip ${chip.Name} no longer exists in the library, cannot add it to your folder you had it marked as ${chip.Used ? "used" : "unused"}`);
+                }
+            });
+        } catch (e) {
+            return false;
+        }
+        return num;
     }
 
     /**

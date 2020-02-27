@@ -117,7 +117,39 @@ export class Pack extends React.Component {
     }
 
     doubleClickActionChanged(event) {
-        this.setState({doubleClickAction: event.target.value});
+        this.setState({ doubleClickAction: event.target.value });
+    }
+
+    eraseData() {
+        this.props.modalOpen("Are you sure you want to remove everything from your pack and folder?", () => {
+            BattleChip.unloadChips();
+            this.props.msgCallback("Your folder and pack are now empty");
+        });
+    }
+
+    importData() {
+        this.props.modalOpen("Importing will erase your current folder and pack, are you sure you want to continue?", () => {
+            this.upload.click();
+
+        });
+    }
+
+
+    importFileGet() {
+        let files = document.getElementById('jsonFile').files;
+        if (files && files.length > 0) {
+
+            /**@type {File} */
+            let file = files[0];
+            file.text().then((text) => {
+                let result = BattleChip.importChips(text);
+                if (!result) {
+                    this.props.msgCallback("Import Failed");
+                } else {
+                    this.props.msgCallback(`${result} chips total are in your pack and folder`);
+                }
+            });
+        }
     }
 
     /**
@@ -153,13 +185,13 @@ export class Pack extends React.Component {
         let chipList = BattleChip.libraryAsArray().filter((chip) => {
             return chip.Owned > 0;
         });
-        
+
         this.sortChips(chipList);
 
         let chips = chipList.map((chip) => {
-            
+
             return (
-                <Packchip chipName={chip.Name} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback}/>
+                <Packchip chipName={chip.Name} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback} />
             );
         });
         /*
@@ -199,10 +231,10 @@ export class Pack extends React.Component {
 
                                 </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                OWN
+                                    OWN
                                 </MDBCol>
                                 <MDBCol size="1" className="debug Chip nopadding">
-                                USED
+                                    USED
                                 </MDBCol>
                             </MDBRow>
                             {chips}
@@ -224,22 +256,35 @@ export class Pack extends React.Component {
                         <br />
                         <br />
                         <span unselectable="off" className="Chip">On Double Click</span><br />
-                        <select value={this.state.doubleClickAction} onChange={(e) => {this.doubleClickActionChanged(e)}} style={{width: "100%"}}>
+                        <select value={this.state.doubleClickAction} onChange={(e) => { this.doubleClickActionChanged(e) }} style={{ width: "100%" }}>
                             <option value="folder">Folder</option>
                             <option value="remove">Remove</option>
                         </select>
 
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <div className="centerContent">
-                        <button onClick={() => {
-                            let count = BattleChip.jackOut();
-                            this.props.msgCallback(`${count} chips have been marked as unused`);
+                            <button onClick={() => {
+                                let count = BattleChip.jackOut();
+                                this.props.msgCallback(`${count} chips have been marked as unused`);
                             }}
-                        >
-                            Jack Out
+                            >
+                                Jack Out
                             </button>
+                            <button onClick={() => { BattleChip.exportJSON() }}>
+                                Export JSON
+                        </button>
+                            <button onClick={() => { BattleChip.exportText() }}>
+                                Export TXT
+                        </button>
+                            <button onClick={() => { this.eraseData() }}>
+                                Erase Data
+                        </button>
+                            <button onClick={() => { this.importData() }}>
+                                Import Data
+                        </button>
                         </div>
+                        <input id="jsonFile" type="file" ref={(ref) => this.upload = ref} style={{ display: 'none' }} accept=".json" onChange={() => {this.importFileGet()}}/>
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
