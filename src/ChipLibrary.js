@@ -250,7 +250,11 @@ export class BattleChip {
 
     static exportText() {
         BattleChip.saveChips();
-        let text = "Folder: ";
+        
+        /** @type {string} */
+        let text;
+        if(BattleChip._FOLDER.length === 0) {
+        text = "Folder: ";
         BattleChip._FOLDER.forEach((chip) => {
             text += chip.Name;
             if (chip.Used) {
@@ -261,6 +265,9 @@ export class BattleChip {
         });
         text = text.slice(0, -2);
         text += "\nPack: ";
+    } else {
+        text = "Pack: ";
+    }
         let packArr = [];
         BattleChip._library.forEach((chip) => {
             if (chip.Owned > 0) {
