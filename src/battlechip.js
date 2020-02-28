@@ -9,7 +9,6 @@ import "./App.css";
 
 export class Packchip extends React.Component {
 
-
     render() {
         if (!this.props.chipName) {
             throw new Error("chipName not set");
@@ -89,6 +88,13 @@ export class Packchip extends React.Component {
 
 export class LibraryChip extends React.Component {
 
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props.chipName !== nextProps.chipName) {
+            return true;
+        }
+        return false;
+    }
 
     render() {
         if (!this.props.chipName) {

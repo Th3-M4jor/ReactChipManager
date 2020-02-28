@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn,} from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn, } from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
@@ -15,7 +15,7 @@ function cmp(a, b) {
 
 
 class FolderChip extends React.Component {
-    
+
     usedChanged() {
         BattleChip.getFolder()[this.props.folderIndex].Used = !BattleChip.getFolder()[this.props.folderIndex].Used;
         this.forceUpdate();
@@ -55,17 +55,18 @@ class FolderChip extends React.Component {
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding centercontent">
-                        <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
+                            <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent nopadding">
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent nopadding">
-                        <input
-                            name="chipUsed"
-                            type="checkbox"
-                            checked={folderChip.Used}
-                            onChange={() => {this.usedChanged()}} />
+                            <input
+                                name="chipUsed"
+                                type="checkbox"
+                                checked={folderChip.Used}
+                                onChange={() => { this.usedChanged() }}
+                            />
                         </MDBCol>
                     </MDBRow>
                 </div>
@@ -132,9 +133,9 @@ export class Folder extends React.Component {
     render() {
         let chips = BattleChip.getFolder();
         chips = this.sortChips(chips);
-        let toRender = chips.map(( _ , index) => {
+        let toRender = chips.map((_, index) => {
             return (
-                <FolderChip folderIndex={index} msgCallback={this.props.msgCallback}/>
+                <FolderChip folderIndex={index} msgCallback={this.props.msgCallback} />
             );
         });
         let folderStatus = (this.props.active ? "Folder activefolder" : "Folder");
@@ -172,14 +173,14 @@ export class Folder extends React.Component {
                     <MDBCol size="2" className="debug nopadding">
                         <span unselectable="on" className="Chip">Chip Limit</span>
                         <input
-                            style={{width: "100%"}}
+                            style={{ width: "100%" }}
                             type="number"
                             name="folderLimit"
                             value={this.state.folderLimit}
                             step="1"
                             min={BattleChip.getFolder().length}
                             max="100"
-                            onChange={(e) => {BattleChip.setFolderSize(e.target.valueAsNumber); this.setState({folderLimit: BattleChip.getFolderSize()});}}
+                            onChange={(e) => { BattleChip.setFolderSize(e.target.valueAsNumber); this.setState({ folderLimit: BattleChip.getFolderSize() }); }}
                         />
                         <br />
                         <br />
@@ -195,15 +196,15 @@ export class Folder extends React.Component {
                         <br />
                         <br />
                         <div className="centerContent">
-                        <MDBBtn onClick={() => {
-                            let count = BattleChip.jackOut();
-                            this.props.msgCallback(`${count} chips have been marked as unused`);
+                            <MDBBtn onClick={() => {
+                                let count = BattleChip.jackOut();
+                                this.props.msgCallback(`${count} chips have been marked as unused`);
                             }} color="blue-grey"
-                        >
-                            Jack Out
+                            >
+                                <span className="Chip">Jack Out</span>
                             </MDBBtn>
-                        <MDBBtn onClick={() => {this.emptyFolder()}} color="blue-grey">
-                            Empty Folder
+                            <MDBBtn onClick={() => { this.emptyFolder() }} color="blue-grey">
+                                <span className="Chip">Clear Folder</span>
                         </MDBBtn>
                         </div>
                     </MDBCol>

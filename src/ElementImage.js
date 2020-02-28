@@ -30,36 +30,6 @@ export class ElementImage extends React.Component {
             return (
                 <img src={URLList[element]} alt="" key={element.toString()} />
             );
-            /*
-            switch(element) {
-                case "Fire":
-                    return (<img src={fireURL} alt=""/>);
-                case "Aqua":
-                    return (<img src={aquaURL} alt=""/>);
-                case "Elec":
-                    return (<img src={elecURL} alt=""/>);
-                case "Wood":
-                    return (<img src={woodURL} alt=""/>);
-                case "Wind":
-                    return (<img src={windURL} alt=""/>);
-                case "Sword":
-                    return (<img src={swordURL} alt=""/>);
-                case "Break":
-                    return (<img src={breakURL} alt=""/>);
-                case "Cursor":
-                    return (<img src={cursorURL} alt=""/>);
-                case "Recovery":
-                    return (<img src={recoveryURL} alt=""/>);
-                case "Invis":
-                    return (<img src={invisURL} alt=""/>);
-                case "Object":
-                    return (<img src={objectURL} alt=""/>);
-                case "Null":
-                    return (<img src={nullURL} alt=""/>);
-                default:
-                    throw new Error("bad element name");
-            }
-            */
         });
         return (
             <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>

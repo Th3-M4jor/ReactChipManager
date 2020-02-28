@@ -49,7 +49,16 @@ export class Library extends React.Component {
         }
     }
 
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.state.sortBy !== nextState.sortBy) {
+            return true;
+        }
+        return false;
+    }
+
     render() {
+
         let chips = BattleChip.libraryAsArray();
         chips = this.sortChips(chips);
         let toRender = chips.map((chip) => {
@@ -191,7 +200,7 @@ export class Pack extends React.Component {
         let chips = chipList.map((chip) => {
 
             return (
-                <Packchip chipName={chip.Name} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback} />
+                <Packchip chipName={chip.Name} ownedCt={chip.Owned} usedCt={chip.Used} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback} />
             );
         });
         /*
@@ -253,8 +262,6 @@ export class Pack extends React.Component {
                         </select>
                         <br />
                         <br />
-                        <br />
-                        <br />
                         <span unselectable="off" className="Chip">On Double Click</span><br />
                         <select value={this.state.doubleClickAction} onChange={(e) => { this.doubleClickActionChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="folder">Folder</option>
@@ -269,19 +276,19 @@ export class Pack extends React.Component {
                                 this.props.msgCallback(`${count} chips have been marked as unused`);
                             }} color="blue-grey"
                             >
-                                Jack Out
+                                <span className="Chip">Jack Out</span>
                             </MDBBtn>
                             <MDBBtn onClick={() => { BattleChip.exportJSON() }} color="blue-grey">
-                                Export JSON
+                                <span className="Chip">Export JSON</span>
                         </MDBBtn>
                             <MDBBtn onClick={() => { BattleChip.exportText() }} color="blue-grey">
-                                Export TXT
+                                <span className="Chip">Export TXT</span>
                         </MDBBtn>
                             <MDBBtn onClick={() => { this.eraseData() }} color="blue-grey">
-                                Erase Data
+                                <span className="Chip">Erase Data</span>
                         </MDBBtn>
                             <MDBBtn onClick={() => { this.importData() }} color="blue-grey">
-                                Import Data
+                                <span className="Chip">Import Data</span>
                         </MDBBtn>
                         </div>
                         <input id="jsonFile" type="file" ref={(ref) => this.upload = ref} style={{ display: 'none' }} accept=".json" onChange={() => {this.importFileGet()}}/>
