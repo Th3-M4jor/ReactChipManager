@@ -106,7 +106,7 @@ const chipTypeEnum = {
  */
 export class BattleChip {
 
-    /** @private */static _FOLDER_LIMIT = 10;
+    /** @private */static _FOLDER_LIMIT = 15;
 
     /**
      * @private

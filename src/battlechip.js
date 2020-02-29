@@ -28,6 +28,9 @@ export class Packchip extends React.Component {
                 type = "Chip";
                 break;
         }
+        if(chip.Owned <= chip.Used) {
+            type = "UsedChip";
+        }
         /**
          * @type {function}
          */

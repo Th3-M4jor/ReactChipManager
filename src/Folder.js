@@ -41,6 +41,9 @@ class FolderChip extends React.Component {
             <MDBTooltip domElement>
                 <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect chipHover"}>
                     <MDBRow center>
+                        <MDBCol size="1" className="debug nopadding">
+                            {this.props.folderIndex + 1}
+                        </MDBCol>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
@@ -145,6 +148,9 @@ export class Folder extends React.Component {
                     <MDBCol size="10" className="debug nopadding">
                         <MDBContainer className={folderStatus} id="folder1" fluid>
                             <MDBRow center className="sticky-top" style={{ backgroundColor: "gray" }}>
+                                <MDBCol size="1" className="debug Chip nopadding">
+
+                                </MDBCol>
                                 <MDBCol size="3" className="debug Chip nopadding">
                                     <span style={{ whiteSpace: "nowrap" }}>NAME</span>
                                 </MDBCol>
