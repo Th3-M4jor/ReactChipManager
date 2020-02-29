@@ -89,7 +89,7 @@ class App extends React.Component {
     return (
       <MDBContainer style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "720px" }} float>
         <div style={{ backgroundColor: "#ffbd18", fontFamily: "Lucida Console", margin: "5px", color: "#FFFFFF", fontWeight: "bold" }}>
-          {this.state.activeTab} <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
+          <span style={{paddingLeft: "5px"}}>{this.state.activeTab}</span> <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
         </div>
         <Router>
           <div style={{ backgroundColor: "#4abdb5", padding: "10px" }}>

@@ -222,7 +222,7 @@ export class Pack extends React.Component {
         let chips = chipList.map((chip) => {
 
             return (
-                <Packchip chipName={chip.Name} ownedCt={chip.Owned} usedCt={chip.Used} key={chip.Name} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback} />
+                <Packchip chipName={chip.Name} ownedCt={chip.Owned} usedCt={chip.Used} key={chip.Name + "P"} action={this.state.doubleClickAction} msgCallback={this.props.msgCallback} />
             );
         });
         /*
