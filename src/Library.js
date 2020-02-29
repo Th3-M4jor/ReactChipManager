@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBBtn, } from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBBtn, MDBInput, } from 'mdbreact';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { LibraryChip, Packchip } from './battlechip';
@@ -17,6 +17,7 @@ function cmp(a, b) {
 export class Library extends React.Component {
     state = {
         sortBy: "Name",
+        nameSearch: "",
     }
 
 
@@ -51,7 +52,7 @@ export class Library extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.sortBy !== nextState.sortBy) {
+        if (this.state.sortBy !== nextState.sortBy || this.state.nameSearch !== nextState.nameSearch) {
             return true;
         }
         return false;
@@ -61,11 +62,30 @@ export class Library extends React.Component {
 
         let chips = BattleChip.libraryAsArray();
         chips = this.sortChips(chips);
-        let toRender = chips.map((chip) => {
-            return (
-                <LibraryChip chipName={chip.Name} msgCallback={this.props.msgCallback} key={chip.Name} />
-            )
-        });
+
+        /** @type {JSX.Element[]} */
+        let toRender = [];
+
+        if (this.state.nameSearch !== "") {
+
+            chips.reduce((toRender, chip) => {
+                if (chip.Name.toLocaleLowerCase().startsWith(this.state.nameSearch.toLocaleLowerCase())) {
+                    toRender.push(
+                        <LibraryChip chipName={chip.Name} msgCallback={this.props.msgCallback} key={chip.Name} />
+                    );
+                }
+                return toRender;
+            }, toRender)
+            if(toRender.length === 0) {
+                toRender = "Nothing matched your search";
+            }
+        } else {
+            toRender = chips.map((chip) => {
+                return (
+                    <LibraryChip chipName={chip.Name} msgCallback={this.props.msgCallback} key={chip.Name} />
+                )
+            });
+        }
         let libraryStatus = (this.props.active ? "Folder activefolder" : "Folder");
         return (
             <MDBContainer fluid>
@@ -105,6 +125,8 @@ export class Library extends React.Component {
                             <option value="Skill">Skill</option>
                             <option value="Range">Range</option>
                         </select>
+                        <br />
+                        <MDBInput type="text" value={this.state.nameSearch} size="sm" background="white" label="Search" onChange={(e) => { this.setState({ nameSearch: e.target.value }) }} />
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
@@ -280,18 +302,18 @@ export class Pack extends React.Component {
                             </MDBBtn>
                             <MDBBtn onClick={() => { BattleChip.exportJSON() }} color="blue-grey">
                                 <span className="Chip">Export JSON</span>
-                        </MDBBtn>
+                            </MDBBtn>
                             <MDBBtn onClick={() => { BattleChip.exportText() }} color="blue-grey">
                                 <span className="Chip">Export TXT</span>
-                        </MDBBtn>
+                            </MDBBtn>
                             <MDBBtn onClick={() => { this.eraseData() }} color="blue-grey">
                                 <span className="Chip">Erase Data</span>
-                        </MDBBtn>
+                            </MDBBtn>
                             <MDBBtn onClick={() => { this.importData() }} color="blue-grey">
                                 <span className="Chip">Import Data</span>
-                        </MDBBtn>
+                            </MDBBtn>
                         </div>
-                        <input id="jsonFile" type="file" ref={(ref) => this.upload = ref} style={{ display: 'none' }} accept=".json" onChange={() => {this.importFileGet()}}/>
+                        <input id="jsonFile" type="file" ref={(ref) => this.upload = ref} style={{ display: 'none' }} accept=".json" onChange={() => { this.importFileGet() }} />
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

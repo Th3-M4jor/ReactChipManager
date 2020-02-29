@@ -165,6 +165,10 @@ export class BattleChip {
 
         let pack = window.localStorage.getItem('pack');
         let folder = window.localStorage.getItem('folder');
+        let chipLimit = window.localStorage.getItem('chipLimit');
+        if(chipLimit != null  && +chipLimit > 0) {
+            BattleChip._FOLDER_LIMIT = +chipLimit;
+        }
         if (pack != null) {
             try {
                 let oldSave = JSON.parse(pack);
@@ -232,6 +236,7 @@ export class BattleChip {
         let pack = JSON.stringify(packArr);
         window.localStorage.setItem('pack', pack);
         window.localStorage.setItem('folder', folder);
+        window.localStorage.setItem('chipLimit', BattleChip._FOLDER_LIMIT.toFixed(0));
     }
 
     static exportJSON() {
@@ -298,6 +303,7 @@ export class BattleChip {
 
     static unloadChips() {
         BattleChip._FOLDER = [];
+        BattleChip._FOLDER_LIMIT = 10;
         BattleChip._library.forEach((chip) => {
             chip.Used = 0;
             chip.Owned = 0;
@@ -305,6 +311,7 @@ export class BattleChip {
         if (BattleChip._SAVE_ON_INTERVAL) {
             window.localStorage.removeItem('pack');
             window.localStorage.removeItem('folder');
+            window.localStorage.removeItem('chipLimit');
         }
     }
 
