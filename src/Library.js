@@ -284,10 +284,10 @@ export class Pack extends React.Component {
                         </select>
                         <br />
                         <br />
-                        <span unselectable="off" className="Chip">On Double Click</span><br />
+                        <span unselectable="off" className="Chip">Double Clicking Will:</span><br />
                         <select value={this.state.doubleClickAction} onChange={(e) => { this.doubleClickActionChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
-                            <option value="folder">Folder</option>
-                            <option value="remove">Remove</option>
+                            <option value="folder">Add To Folder</option>
+                            <option value="remove">Remove From Pack</option>
                         </select>
 
                         <br />
