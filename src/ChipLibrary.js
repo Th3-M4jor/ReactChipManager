@@ -147,6 +147,7 @@ export class BattleChip {
             let confirmationMessage = 'Progress might be lost if you leave without saving an export.';
           
             (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            BattleChip.saveChips();
             return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
           });
 
@@ -303,7 +304,7 @@ export class BattleChip {
 
     static unloadChips() {
         BattleChip._FOLDER = [];
-        BattleChip._FOLDER_LIMIT = 10;
+        BattleChip._FOLDER_LIMIT = 15;
         BattleChip._library.forEach((chip) => {
             chip.Used = 0;
             chip.Owned = 0;

@@ -25,17 +25,21 @@ class FolderChip extends React.Component {
         let folderChip = BattleChip.getFolder()[this.props.folderIndex];
         let chip = BattleChip.getChip(folderChip.Name);
         let type = "";
-        switch (chip.Type) {
-            case "Giga":
-                type = "Giga";
-                break;
-            case "Mega":
-                type = "Mega";
-                break;
-            case "Standard":
-            default:
-                type = "Chip";
-                break;
+        if (folderChip.Used) {
+            type = "UsedChip";
+        } else {
+            switch (chip.Type) {
+                case "Giga":
+                    type = "Giga";
+                    break;
+                case "Mega":
+                    type = "Mega";
+                    break;
+                case "Standard":
+                default:
+                    type = "Chip";
+                    break;
+            }
         }
         return (
             <MDBTooltip domElement>
@@ -211,7 +215,7 @@ export class Folder extends React.Component {
                             </MDBBtn>
                             <MDBBtn onClick={() => { this.emptyFolder() }} color="blue-grey">
                                 <span className="Chip">Clear Folder</span>
-                        </MDBBtn>
+                            </MDBBtn>
                         </div>
                     </MDBCol>
                 </MDBRow>

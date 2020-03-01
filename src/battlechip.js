@@ -16,28 +16,31 @@ export class Packchip extends React.Component {
 
         let chip = BattleChip.getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
-        switch (chip.Type) {
-            case "Giga":
-                type = "Giga";
-                break;
-            case "Mega":
-                type = "Mega";
-                break;
-            case "Standard":
-            default:
-                type = "Chip";
-                break;
-        }
-        if(chip.Owned <= chip.Used) {
+
+        if (chip.Owned <= chip.Used) {
             type = "UsedChip";
+        } else {
+
+            switch (chip.Type) {
+                case "Giga":
+                    type = "Giga";
+                    break;
+                case "Mega":
+                    type = "Mega";
+                    break;
+                case "Standard":
+                default:
+                    type = "Chip";
+                    break;
+            }
         }
         /**
          * @type {function}
          */
         let action;
-        if(this.props.action === "remove") {
+        if (this.props.action === "remove") {
             action = () => {
-                chip.Owned--; 
+                chip.Owned--;
                 this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`);
             };
         } else {
@@ -45,7 +48,7 @@ export class Packchip extends React.Component {
                 try {
                     chip.addToFolder();
                     this.props.msgCallback(`A copy of ${chip.Name} has been added to your folder`);
-                } catch(err) {
+                } catch (err) {
                     alert(err.message);
                 }
             };
@@ -55,12 +58,12 @@ export class Packchip extends React.Component {
                 <div className={type + " noselect chipHover"} onDoubleClick={action}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
-                        <span style={{ whiteSpace: "nowrap"}}>{chip.Name}</span>
+                            <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
                         </MDBCol>
                         <MDBCol size="2" className="debug nopadding">
                             {chip.Skill}
                         </MDBCol>
-                        
+
                         <MDBCol size="1" className="debug nopadding">
                             {chip.Damage}
                         </MDBCol>
@@ -68,7 +71,7 @@ export class Packchip extends React.Component {
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding">
-                        <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
+                            <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding centercontent">
                             <ElementImage element={chip.Element} />
@@ -93,7 +96,7 @@ export class LibraryChip extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.props.chipName !== nextProps.chipName) {
+        if (this.props.chipName !== nextProps.chipName) {
             return true;
         }
         return false;
@@ -136,7 +139,7 @@ export class LibraryChip extends React.Component {
                             {chip.Range}
                         </MDBCol>
                         <MDBCol size="1" className="debug nopadding centercontent">
-                        <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
+                            <span style={{ whiteSpace: "nowrap" }}>{chip.Hits}</span>
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent nopadding">
                             <ElementImage element={chip.Element} />
