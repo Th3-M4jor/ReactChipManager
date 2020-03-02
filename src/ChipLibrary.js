@@ -145,11 +145,11 @@ export class BattleChip {
 
         window.addEventListener("beforeunload", function (e) {
             let confirmationMessage = 'Progress might be lost if you leave without saving an export.';
-          
+
             (e || window.event).returnValue = confirmationMessage; //Gecko + IE
             BattleChip.saveChips();
             return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-          });
+        });
 
         BattleChip._library.clear();
         let body = await fetch(URL);
@@ -167,7 +167,7 @@ export class BattleChip {
         let pack = window.localStorage.getItem('pack');
         let folder = window.localStorage.getItem('folder');
         let chipLimit = window.localStorage.getItem('chipLimit');
-        if(chipLimit != null  && +chipLimit > 0) {
+        if (chipLimit != null && +chipLimit > 0) {
             BattleChip._FOLDER_LIMIT = +chipLimit;
         }
         if (pack != null) {
@@ -256,24 +256,24 @@ export class BattleChip {
 
     static exportText() {
         BattleChip.saveChips();
-        
+
         /** @type {string} */
         let text;
-        if(BattleChip._FOLDER.length === 0) {
-        text = "Folder: ";
-        BattleChip._FOLDER.forEach((chip) => {
-            text += chip.Name;
-            if (chip.Used) {
-                text += " (Used), ";
-            } else {
-                text += ", ";
-            }
-        });
-        text = text.slice(0, -2);
-        text += "\nPack: ";
-    } else {
-        text = "Pack: ";
-    }
+        if (BattleChip._FOLDER.length === 0) {
+            text = "Folder: ";
+            BattleChip._FOLDER.forEach((chip) => {
+                text += chip.Name;
+                if (chip.Used) {
+                    text += " (Used), ";
+                } else {
+                    text += ", ";
+                }
+            });
+            text = text.slice(0, -2);
+            text += "\nPack: ";
+        } else {
+            text = "Pack: ";
+        }
         let packArr = [];
         BattleChip._library.forEach((chip) => {
             if (chip.Owned > 0) {
@@ -510,10 +510,19 @@ export class BattleChip {
         return this._used;
     }
 
+    get UnUsed() {
+        return this._owned - this._used;
+    }
+
     /**
      * @param {number} newCt
      */
     set Owned(newCt) {
+
+        if (newCt < 0) {
+            throw new Error(`Bad owned value for ${this._name}`);
+        }
+
         if (newCt < this._used) {
             this._used = newCt;
         }
@@ -539,12 +548,16 @@ export class BattleChip {
 
     addToFolder() {
         let unused = this._owned - this._used;
-        if (unused > 0 && BattleChip._FOLDER_LIMIT > BattleChip._FOLDER.length) {
-            BattleChip._FOLDER.push({ Name: this.Name, Used: false });
-            this._owned--;
-        } else {
-            throw new Error("Cannot add that to your folder, either not enough unused, too many in your folder, or your folder has too many chips already");
+
+        if (unused <= 0) {
+            throw new Error(`Cannot add a copy of ${this._name} to your folder, you don't have an unused coppies`);
         }
+
+        if (BattleChip._FOLDER_LIMIT <= BattleChip._FOLDER.length) {
+            throw new Error(`Cannot add a copy of ${this._name} to your folder, your folder is full`);
+        }
+        BattleChip._FOLDER.push({ Name: this.Name, Used: false });
+        this._owned--;
     }
 
     /**

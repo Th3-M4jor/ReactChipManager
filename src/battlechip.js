@@ -55,7 +55,7 @@ export class Packchip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div className={type + " noselect chipHover"} onDoubleClick={action}>
+                <div className={type + " noselect chipHover"} onDoubleClick={action} id={chip.Name + "_D"}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>
@@ -123,7 +123,7 @@ export class LibraryChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect chipHover"}>
+                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect chipHover"} id={chip.Name + "_L"}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>

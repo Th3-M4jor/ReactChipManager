@@ -1,5 +1,6 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBContainer, MDBBtn, MDBInput, } from 'mdbreact';
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 // eslint-disable-next-line
 import { BattleChip } from './ChipLibrary';
 import { LibraryChip, Packchip } from './battlechip';
@@ -20,6 +21,7 @@ export class Library extends React.Component {
         nameSearch: "",
     }
 
+    static rightClickedChipName = "";
 
     sortSelectChanged(event) {
         this.setState({ sortBy: event.target.value });
@@ -76,7 +78,7 @@ export class Library extends React.Component {
                 }
                 return toRender;
             }, toRender)
-            if(toRender.length === 0) {
+            if (toRender.length === 0) {
                 toRender = "Nothing matched your search";
             }
         } else {
@@ -112,7 +114,32 @@ export class Library extends React.Component {
 
                                 </MDBCol>
                             </MDBRow>
-                            {toRender}
+                            <ContextMenuTrigger id="LibraryContextMenu">
+                                {toRender}
+                            </ContextMenuTrigger>
+                            <ContextMenu id="LibraryContextMenu" hideOnLeave onShow={() => {
+                                let target = document.querySelector(".chipHover:hover");
+                                if (target === null) {
+                                    console.log("did not find element");
+                                    return;
+                                } else {
+                                    console.log(target.id.slice(0, -2));
+                                }
+                                Library.rightClickedChipName = target.id.slice(0, -2);
+                            }} onHide={() => {
+
+                            }}
+                                className="RightClickMenu">
+                                <MenuItem onClick={() => {
+                                    if (Library.rightClickedChipName !== "") {
+                                        let chip = BattleChip.getChip(Library.rightClickedChipName);
+                                        chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`);
+                                    }
+                                    Library.rightClickedChipName = "";
+                                }} className="RightClickMenuItem">
+                                    <span style={{ color: "red" }} className="noselect">Add To Pack</span>
+                                </MenuItem>
+                            </ContextMenu>
                         </MDBContainer>
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">
@@ -142,6 +169,7 @@ export class Pack extends React.Component {
         doubleClickAction: "folder"
     }
 
+    static rightClickedChipName = "";
 
     sortSelectChanged(event) {
         this.setState({ sortBy: event.target.value });
@@ -268,7 +296,59 @@ export class Pack extends React.Component {
                                     USED
                                 </MDBCol>
                             </MDBRow>
-                            {chips}
+                            <ContextMenuTrigger id="PackContextMenu">
+                                {chips}
+                            </ContextMenuTrigger>
+                            <ContextMenu id="PackContextMenu" hideOnLeave onShow={() => {
+                                let target = document.querySelector(".chipHover:hover");
+                                if (target === null) {
+                                    console.log("did not find element");
+                                    return;
+                                } else {
+                                    console.log(target.id.slice(0, -2));
+                                }
+                                Pack.rightClickedChipName = target.id.slice(0, -2);
+                            }} onHide={() => {
+                                Pack.rightClickedChipName = "";
+                            }}
+                                className="RightClickMenu">
+                                <MenuItem onClick={() => {
+                                    if (Pack.rightClickedChipName !== "") {
+                                        try {
+                                            let chip = BattleChip.getChip(Pack.rightClickedChipName);
+                                            chip.addToFolder();
+                                            this.props.msgCallback(`A copy of ${chip.Name} has been added to your folder`);
+                                        } catch (err) {
+                                            alert(err.message);
+                                        }
+                                        Pack.rightClickedChipName = "";
+                                    }
+                                }} className="RightClickMenuItem">
+                                    <span style={{ color: "red" }} className="noselect">Add to Folder</span>
+                                </MenuItem>
+                                <MenuItem onClick={() => {
+                                    if (Pack.rightClickedChipName !== "") {
+                                        let chip = BattleChip.getChip(Pack.rightClickedChipName);
+                                        chip.Owned--; this.props.msgCallback(`A copy of ${chip.Name} has been removed from your pack`);
+                                    }
+                                    Pack.rightClickedChipName = "";
+                                }} className="RightClickMenuItem">
+                                    <span style={{ color: "red" }} className="noselect">Remove from Pack</span>
+                                </MenuItem>
+                                <MenuItem onClick={() => {
+                                    if (Pack.rightClickedChipName !== "") {
+                                        let chip = BattleChip.getChip(Pack.rightClickedChipName);
+                                        if (chip.Used <= 0) {
+                                            alert(`You do not have any used coppies of ${chip.Name}`);
+                                            Pack.rightClickedChipName = "";
+                                            return;
+                                        }
+                                        chip.Used--; this.props.msgCallback(`A copy of ${chip.Name} has been marked unused`);
+                                    }
+                                }} className="RightClickMenuItem">
+                                    <span style={{ color: "red" }} className="noselect">Mark copy UnUsed</span>
+                                </MenuItem>
+                            </ContextMenu>
                         </MDBContainer>
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">
