@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn, } from 'mdbreact';
-// eslint-disable-next-line
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
 import './App.css';
@@ -43,7 +43,7 @@ class FolderChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect chipHover"}>
+                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect chipHover"} id={`F1_${this.props.folderIndex}`}>
                     <MDBRow center>
                         <MDBCol size="1" className="debug nopadding">
                             {this.props.folderIndex + 1}
@@ -68,12 +68,14 @@ class FolderChip extends React.Component {
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent nopadding">
+                        <div onDoubleClick={(e) => {e.stopPropagation()}}>
                             <input
                                 name="chipUsed"
                                 type="checkbox"
                                 checked={folderChip.Used}
                                 onChange={() => { this.usedChanged() }}
                             />
+                        </div>
                         </MDBCol>
                     </MDBRow>
                 </div>
@@ -98,6 +100,7 @@ export class Folder extends React.Component {
             sortBy: "Name",
             folderLimit: BattleChip.getFolderSize(),
         }
+        this.rightClickedIndex = -1;
     }
 
 
@@ -177,7 +180,27 @@ export class Folder extends React.Component {
                                     USED
                                 </MDBCol>
                             </MDBRow>
-                            {toRender}
+                            <ContextMenuTrigger id="FolderContextMenu">
+                                {toRender}
+                            </ContextMenuTrigger>
+                            <ContextMenu id="FolderContextMenu" hideOnLeave onShow={() => {
+                                let target = document.querySelector(".chipHover:hover");
+                                if(target === null) {return;}
+                                this.rightClickedIndex = +target.id.substring(3);
+                            }} onHide={() => {
+                                this.rightClickedIndex = -1;
+                            }} className="RightClickMenu">
+                                <MenuItem onClick={() => {
+                                    if(this.rightClickedIndex < 0 || BattleChip.getFolder().length <= this.rightClickedIndex) {
+                                        return;
+                                    }
+                                    let name = BattleChip.returnToPackByIndex(this.rightClickedIndex);
+                                    this.rightClickedIndex = -1;
+                                    this.props.msgCallback(`A copy of ${name} has been returned to your pack`);
+                                }} className="RightClickMenuItem">
+                                <span className="noselect">Return to Pack</span>
+                                </MenuItem>
+                            </ContextMenu>
                         </MDBContainer>
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">

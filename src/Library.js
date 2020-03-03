@@ -120,14 +120,11 @@ export class Library extends React.Component {
                             <ContextMenu id="LibraryContextMenu" hideOnLeave onShow={() => {
                                 let target = document.querySelector(".chipHover:hover");
                                 if (target === null) {
-                                    console.log("did not find element");
                                     return;
-                                } else {
-                                    console.log(target.id.slice(0, -2));
                                 }
                                 Library.rightClickedChipName = target.id.slice(0, -2);
                             }} onHide={() => {
-
+                                Library.rightClickedChipName = "";
                             }}
                                 className="RightClickMenu">
                                 <MenuItem onClick={() => {
@@ -137,7 +134,7 @@ export class Library extends React.Component {
                                     }
                                     Library.rightClickedChipName = "";
                                 }} className="RightClickMenuItem">
-                                    <span style={{ color: "red" }} className="noselect">Add To Pack</span>
+                                    <span className="noselect">Add copy to Pack</span>
                                 </MenuItem>
                             </ContextMenu>
                         </MDBContainer>
@@ -231,7 +228,7 @@ export class Pack extends React.Component {
             case "Range":
                 return list.sort((a, b) => cmp(a.RangeSortPos, b.RangeSortPos) || cmp(a.Name, b.Name));
             case "Owned":
-                return list.sort((a, b) => cmp(a.Owned, b.Owned) || cmp(a.Name, b.Name));
+                return list.sort((a, b) => cmp(b.Owned, a.Owned) || cmp(a.Name, b.Name));
             default:
                 throw Error("Invalid sort option");
         }
@@ -324,7 +321,7 @@ export class Pack extends React.Component {
                                         Pack.rightClickedChipName = "";
                                     }
                                 }} className="RightClickMenuItem">
-                                    <span style={{ color: "red" }} className="noselect">Add to Folder</span>
+                                    <span className="noselect">Add to Folder</span>
                                 </MenuItem>
                                 <MenuItem onClick={() => {
                                     if (Pack.rightClickedChipName !== "") {
@@ -333,7 +330,7 @@ export class Pack extends React.Component {
                                     }
                                     Pack.rightClickedChipName = "";
                                 }} className="RightClickMenuItem">
-                                    <span style={{ color: "red" }} className="noselect">Remove from Pack</span>
+                                    <span className="noselect">Remove from Pack</span>
                                 </MenuItem>
                                 <MenuItem onClick={() => {
                                     if (Pack.rightClickedChipName !== "") {
@@ -346,7 +343,7 @@ export class Pack extends React.Component {
                                         chip.Used--; this.props.msgCallback(`A copy of ${chip.Name} has been marked unused`);
                                     }
                                 }} className="RightClickMenuItem">
-                                    <span style={{ color: "red" }} className="noselect">Mark copy UnUsed</span>
+                                    <span className="noselect">Mark copy Unused</span>
                                 </MenuItem>
                             </ContextMenu>
                         </MDBContainer>

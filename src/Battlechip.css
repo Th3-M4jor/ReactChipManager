@@ -85,11 +85,17 @@ img {
     min-width: 160px;
     padding: 5px;
     pointer-events: none;
+    font-weight: normal;
     text-align: left;
     transition: opacity 250ms ease !important;
     font-family: "Lucida Console";
+    color: black;
     font-size: 14px;
     z-index: 9999;
+}
+
+.DisableDoubleClick {
+    pointer-events: none;
 }
 
 /*

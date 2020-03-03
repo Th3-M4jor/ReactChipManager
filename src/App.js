@@ -93,6 +93,7 @@ class App extends React.Component {
         </div>
         <Router>
           <div style={{ backgroundColor: "#4abdb5", padding: "10px" }}>
+          <div style={{paddingLeft: "15px"}}>
             <MDBNav className="nav-tabs" tabs header>
               <MDBNavItem active={this.state.activeTab === "Folder"} className={this.state.activeTab === "Folder" ? "activeTab" : "inactiveTab"} tag="div">
                 <MDBNavLink to="#" active={this.state.activeTab === "Folder"} onClick={this.toggle("Folder")} role="tab" className={this.state.activeTab === "Folder" ? "activeTab" : "inactiveTab"} tag="div">
@@ -110,6 +111,7 @@ class App extends React.Component {
             </MDBNavLink>
               </MDBNavItem>
             </MDBNav>
+            </div>
             <MDBTabContent activeItem={this.state.activeTab}>
               <MDBTabPane tabId="Folder" role="tabpanel">
                 <Folder active={this.state.activeTab === "Folder"} msgCallback={(msg) => { this.setMessage(msg) }} modalOpen={(msg, callback) => { this.openModal(msg, callback) }} />

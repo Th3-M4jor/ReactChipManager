@@ -108,6 +108,12 @@ export class BattleChip {
 
     /** @private */static _FOLDER_LIMIT = 15;
 
+    /** @private */static _STANDARD_DUPLICATES_LIMIT = 3;
+
+    /** @private */static _MEGA_DUPLICATES_LIMIT = 1;
+
+    /** @private */static _GIGA_DUPLICATES_LIMIT = 1;
+
     /**
      * @private
      * @type {FolderChipObj[]}
@@ -547,15 +553,45 @@ export class BattleChip {
     }
 
     addToFolder() {
-        let unused = this._owned - this._used;
+       
 
-        if (unused <= 0) {
-            throw new Error(`Cannot add a copy of ${this._name} to your folder, you don't have an unused coppies`);
-        }
+
 
         if (BattleChip._FOLDER_LIMIT <= BattleChip._FOLDER.length) {
-            throw new Error(`Cannot add a copy of ${this._name} to your folder, your folder is full`);
+            throw new Error(`Cannot add a copy of ${this._name} to your folder for the following reason:\n your folder is full`);
         }
+
+        let unused = this._owned - this._used;
+        if (unused <= 0) {
+            throw new Error(`Cannot add a copy of ${this._name} to your folder for the following reason:\nyou don't have an unused copy`);
+        }
+
+        let currCount = BattleChip._FOLDER.filter((chip) => {
+            return chip.Name === this._name;
+        }).length;
+
+
+        switch (this._type) {
+
+            case "Giga":
+                if (currCount >= BattleChip._GIGA_DUPLICATES_LIMIT) {
+                    throw new Error(`Cannot add a copy of ${this._name} to your folder for the following reason:\nYou cannot have more than ${BattleChip._GIGA_DUPLICATES_LIMIT} of the same Giga Chip`);
+                }
+                break;
+
+            case "Mega":
+                if (currCount >= BattleChip._MEGA_DUPLICATES_LIMIT) {
+                    throw new Error(`Cannot add a copy of ${this._name} to your folder for the following reason:\nYou cannot have more than ${BattleChip._MEGA_DUPLICATES_LIMIT} of the same Mega Chip`);
+                }
+                break;
+
+            case "Standard":
+            default:
+                if (currCount >= BattleChip._STANDARD_DUPLICATES_LIMIT) {
+                    throw new Error(`Cannot add a copy of ${this._name} to your folder for the following reason:\nYou cannot have more than ${BattleChip._STANDARD_DUPLICATES_LIMIT} of the same Standard Chip`);
+                }
+        }
+
         BattleChip._FOLDER.push({ Name: this.Name, Used: false });
         this._owned--;
     }
@@ -585,8 +621,9 @@ export class BattleChip {
     }
 
     /**
-     * 
+     * returns a specific index back into the pack from your folder
      * @param {number} index 
+     * @returns {string} the name of the chip returned
      */
     static returnToPackByIndex(index) {
         let chip = BattleChip._FOLDER.splice(index, 1)[0];
@@ -595,6 +632,7 @@ export class BattleChip {
         if (chip.Used) {
             packChip.Used++;
         }
+        return chip.Name;
     }
 
     /**
