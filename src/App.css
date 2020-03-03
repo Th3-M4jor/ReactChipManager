@@ -14,30 +14,38 @@ div.Folder {
     overflow-x: hidden;
 }
 
+body {
+    background-color: #00637b !important;
+}
+
+.tabPaneArea {
+    background-color: #4abdb5;
+}
+
 .activefolder {
     will-change: scroll-position;
 }
 
-div.nopadding {
-    padding-left: 0px;
-    padding-right: 0px;
+.nopadding {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
-div.folderPadding {
-    padding-left: 2px;
-    padding-right: 2px;
+.folderPadding {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
 }
 
-div.centercontent {
-    text-align: center;
+.centercontent {
+    text-align: center !important;
 }
 
-div.noPadLeft {
-    padding-left: 0px;
+.noPadLeft {
+    padding-left: 0px !important;
 }
 
-div.noPadRight {
-    padding-right: 0px;
+.noPadRight {
+    padding-right: 0px !important;
 }
 
 .noselect {

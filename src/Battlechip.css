@@ -71,6 +71,11 @@
 
 img {
     height: 100%;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    transform: scale(1.25);
 }
 
 .chipHover:hover {
