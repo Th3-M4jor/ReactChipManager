@@ -20,6 +20,7 @@ function cmp(a, b) {
   var playerName = "Major";
 
 function openSocket() {
+    if(socket !== null) return;
     socket = io("wss://spartan364.hopto.org", {transports: ['websocket', 'polling']});
     socket.on("error", (err) => {
       if(err) {
@@ -269,7 +270,7 @@ export class Folder extends React.Component {
                             <MDBBtn onClick={() => { this.emptyFolder() }} color="blue-grey">
                                 <span className="Chip">Clear Folder</span>
                             </MDBBtn>
-                            <MDBBtn onClick={() => {openSocket()}}>
+                            <MDBBtn onClick={() => {openSocket()}} color="blue-grey">
                                 <span className="Chip">Join Folder Group</span>
                             </MDBBtn>
                         </div>
