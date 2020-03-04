@@ -14,7 +14,7 @@ import { Folder } from './Folder';
 class App extends React.Component {
   state = {
     chipsLoaded: false,
-    activeTab: "Pack",
+    activeTab: "Library",
     updateText: "",
     modalText: "",
     modalOpen: false,
@@ -23,12 +23,11 @@ class App extends React.Component {
 
   modificationTimeout = null;
 
+
   componentDidMount() {
     BattleChip.loadChips().then(() => {
       this.setState({
         chipsLoaded: true,
-        activeTab: "Library",
-        updateText: "",
       });
     });
   }

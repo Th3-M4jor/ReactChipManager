@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn, } from 'mdbreact';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
+import io from 'socket.io-client';
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
 import './App.css';
@@ -11,6 +12,35 @@ function cmp(a, b) {
     if (a > b) return +1;
     if (a < b) return -1;
     return 0;
+}
+
+  /**@type {SocketIOClient.Socket} */
+  var socket = null;
+  var groupName = "Major";
+  var playerName = "Major";
+
+function openSocket() {
+    socket = io("wss://spartan364.hopto.org", {transports: ['websocket', 'polling']});
+    socket.on("error", (err) => {
+      if(err) {
+        console.log(err)
+      } else {
+        console.log("unknown err occurred");
+      }
+      socket.close();
+      socket = null;
+    });
+    console.log(socket.connected);
+    socket.on('joined', () => {
+      let playerFolder = JSON.stringify({ Chips: BattleChip.getFolder(), Name: playerName});
+      socket.on('folder', (data) => {
+        console.log(data);
+      });
+      socket.emit(groupName, playerFolder);
+
+    });
+    
+    socket.emit("join", groupName);
 }
 
 
@@ -145,7 +175,7 @@ export class Folder extends React.Component {
         chips = this.sortChips(chips);
         let toRender = chips.map((_, index) => {
             return (
-                <FolderChip folderIndex={index} msgCallback={this.props.msgCallback} />
+                <FolderChip folderIndex={index} msgCallback={this.props.msgCallback} key={`F1C_${index}`}/>
             );
         });
         let folderStatus = (this.props.active ? "Folder activefolder" : "Folder");
@@ -238,6 +268,9 @@ export class Folder extends React.Component {
                             </MDBBtn>
                             <MDBBtn onClick={() => { this.emptyFolder() }} color="blue-grey">
                                 <span className="Chip">Clear Folder</span>
+                            </MDBBtn>
+                            <MDBBtn onClick={() => {openSocket()}}>
+                                <span className="Chip">Join Folder Group</span>
                             </MDBBtn>
                         </div>
                     </MDBCol>
