@@ -165,16 +165,26 @@ class App extends React.Component {
       }
     }
 
-
+    let tabName = "";
+    if (FolderWebSocket.inFolderGroup()) {
+      let res = /^Folder_(.+)$/.exec(this.state.activeTab);
+      if (res) {
+        tabName = res[1].trim() + "'s Folder";
+      } else {
+        tabName = this.state.activeTab;
+      }
+    } else {
+      tabName = this.state.activeTab;
+    }
 
     return (
       <MDBContainer style={{ backgroundColor: "#00637b", padding: "5px", maxWidth: "720px" }} fluid>
         <div style={{ backgroundColor: "#ffbd18", fontFamily: "Lucida Console", margin: "5px", color: "#FFFFFF", fontWeight: "bold" }}>
-          <span style={{ paddingLeft: "5px" }}>{this.state.activeTab}</span> <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
+          <span style={{ paddingLeft: "5px" }}>{tabName}</span> <span style={{ float: "right", color: "red" }}>{this.state.updateText}</span>
         </div>
         <Router>
           <div style={{ backgroundColor: "#4abdb5", padding: "10px" }}>
-            <div style={{ paddingLeft: "15px", transform: "translate(0px,5px)" }}>
+            <div style={{ paddingLeft: "25px", transform: "translate(0px,8px)" }}>
               <MDBNav tabs header>
                 {navLinks}
               </MDBNav>
@@ -197,8 +207,8 @@ class App extends React.Component {
         <MDBModal centered isOpen={this.state.folderGroupModalOpen} toggle={() => { this.closeGroupModal() }}>
           <MDBModalHeader>Join a group</MDBModalHeader>
           <MDBModalBody>
-            <MDBInput label="Group Name" type="text" id="setGroupName"/>
-            <MDBInput label="Player Name" type="text" id="setPlayerName"/>
+            <MDBInput label="Group Name" type="text" id="setGroupName" />
+            <MDBInput label="Player Name" type="text" id="setPlayerName" />
           </MDBModalBody>
           <MDBModalFooter>
             <button onClick={() => {
