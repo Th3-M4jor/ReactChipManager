@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-
+import { FolderWebSocket } from "./FolderWebSocket";
 
 
 const URL = "https://spartan364.hopto.org/chips.json";
@@ -228,6 +228,7 @@ export class BattleChip {
                 packChip.Used++;
             }
         }
+        FolderWebSocket.folderUpdated();
         return toRet;
     }
 
@@ -315,6 +316,7 @@ export class BattleChip {
             chip.Used = 0;
             chip.Owned = 0;
         });
+        FolderWebSocket.folderUpdated();
         if (BattleChip._SAVE_ON_INTERVAL) {
             window.localStorage.removeItem('pack');
             window.localStorage.removeItem('folder');
@@ -373,8 +375,10 @@ export class BattleChip {
                 }
             });
         } catch (e) {
+            FolderWebSocket.folderUpdated();
             return false;
         }
+        FolderWebSocket.folderUpdated();
         return num;
     }
 
@@ -413,7 +417,14 @@ export class BattleChip {
             return elementsEnum[elem];
         });
         /** @private */this._skills = chipObj.Skills;
-
+        /** @private
+        *  @type {number} */
+        this._skillSortPos = 0;
+        if (this._skills.length > 1) {
+            this._skillSortPos = skillsEnum.Varies;
+        } else {
+            this._skillSortPos = skillsEnum[this._skills[0]];
+        }
         if (this._skills[0] === "None") {
             this._skills[0] = "--";
         }
@@ -423,14 +434,7 @@ export class BattleChip {
         /** @private */this._hits = chipObj.Hits;
         /** @private */this._description = chipObj.Description;
         /** @private */this._all = chipObj.All;
-        /** @private
-         *  @type {number} */
-        this._skillSortPos = 0;
-        if (this._skills.length > 1) {
-            this._skillSortPos = skillsEnum.Varies;
-        } else {
-            this._skillSortPos = skillsEnum[this._skills[0]];
-        }
+
         /** @private */this._avgDamage = 0;
         /** @private */this._maxDamage = 0;
         let dice = damageRegex.exec(this._damage);
@@ -553,7 +557,7 @@ export class BattleChip {
     }
 
     addToFolder() {
-       
+
 
 
 
@@ -594,6 +598,7 @@ export class BattleChip {
 
         BattleChip._FOLDER.push({ Name: this.Name, Used: false });
         this._owned--;
+        FolderWebSocket.folderUpdated();
     }
 
     /**
@@ -618,6 +623,7 @@ export class BattleChip {
         if (used) {
             chip.Used++;
         }
+        FolderWebSocket.folderUpdated();
     }
 
     /**
@@ -632,6 +638,7 @@ export class BattleChip {
         if (chip.Used) {
             packChip.Used++;
         }
+        FolderWebSocket.folderUpdated();
         return chip.Name;
     }
 
@@ -652,6 +659,7 @@ export class BattleChip {
             usedCount += chip.Used;
             chip.Used = 0;
         });
+        FolderWebSocket.folderUpdated();
         return usedCount;
     }
 

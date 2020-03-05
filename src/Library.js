@@ -54,6 +54,9 @@ export class Library extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.active !== true) {
+            return false;
+        }
         if (this.state.sortBy !== nextState.sortBy || this.state.nameSearch !== nextState.nameSearch) {
             return true;
         }
@@ -232,6 +235,13 @@ export class Pack extends React.Component {
             default:
                 throw Error("Invalid sort option");
         }
+    }
+
+    shouldComponentUpdate(nextProps) {
+        if(nextProps.active === false) {
+            return false;
+        }
+        return true;
     }
 
     render() {
