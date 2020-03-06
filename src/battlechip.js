@@ -95,11 +95,18 @@ export class Packchip extends React.Component {
 export class LibraryChip extends React.Component {
 
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
         if (this.props.chipName !== nextProps.chipName) {
             return true;
         }
         return false;
+    }
+
+
+    onChipDoubleClick = () => {
+        let chip = BattleChip.getChip(this.props.chipName);
+        chip.Owned++;
+        this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`); 
     }
 
     render() {
@@ -123,7 +130,7 @@ export class LibraryChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { chip.Owned++; this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`) }} className={type + " noselect chipHover"} id={chip.Name + "_L"}>
+                <div onDoubleClick={this.onChipDoubleClick} className={type + " noselect chipHover"} id={chip.Name + "_L"}>
                     <MDBRow center>
                         <MDBCol size="3" className="debug nopadding">
                             <span style={{ whiteSpace: "nowrap" }}>{chip.Name}</span>

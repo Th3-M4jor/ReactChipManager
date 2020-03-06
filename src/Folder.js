@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn, } from 'mdbreact';
+import { MDBRow, MDBCol, MDBContainer, MDBTooltip, MDBBtn, MDBInput } from 'mdbreact';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { BattleChip } from './ChipLibrary';
 import { ElementImage } from "./ElementImage";
@@ -17,11 +17,18 @@ function cmp(a, b) {
 
 class FolderChip extends React.Component {
 
-    usedChanged() {
+    usedChanged = () => {
         BattleChip.getFolder()[this.props.folderIndex].Used = !BattleChip.getFolder()[this.props.folderIndex].Used;
         FolderWebSocket.folderUpdated();
         this.forceUpdate();
     }
+
+    addChipToPack = () => {
+        let name = BattleChip.returnToPackByIndex(this.props.folderIndex);
+        this.props.msgCallback(`A copy of ${name} has been returned to your pack`);
+    }
+
+    stopPropagation = (e) => {e.stopPropagation()};
 
     render() {
         let folderChip = BattleChip.getFolder()[this.props.folderIndex];
@@ -45,7 +52,7 @@ class FolderChip extends React.Component {
         }
         return (
             <MDBTooltip domElement>
-                <div onDoubleClick={() => { BattleChip.returnToPackByIndex(this.props.folderIndex); this.props.msgCallback(`A copy of ${chip.Name} has been returned to your pack`) }} className={type + " noselect chipHover"} id={`F1_${this.props.folderIndex}`}>
+                <div onDoubleClick={this.addChipToPack} className={type + " noselect chipHover"} id={`F1_${this.props.folderIndex}`}>
                     <MDBRow center>
                         <MDBCol size="1" className="debug nopadding">
                             {this.props.folderIndex + 1}
@@ -70,12 +77,12 @@ class FolderChip extends React.Component {
                             <ElementImage element={chip.Element} />
                         </MDBCol>
                         <MDBCol size="1" className="debug centerContent nopadding">
-                        <div onDoubleClick={(e) => {e.stopPropagation()}}>
+                        <div onDoubleClick={this.stopPropagation}>
                             <input
                                 name="chipUsed"
                                 type="checkbox"
                                 checked={folderChip.Used}
-                                onChange={() => { this.usedChanged() }}
+                                onChange={this.usedChanged}
                             />
                         </div>
                         </MDBCol>
@@ -220,8 +227,9 @@ export class Folder extends React.Component {
                         </MDBContainer>
                     </MDBCol>
                     <MDBCol size="2" className="debug nopadding">
-                        <span unselectable="on" className="Chip">Chip Limit</span>
-                        <input
+                        <MDBInput
+                            label="Chip Limit"
+                            background = "white"
                             style={{ width: "100%" }}
                             type="number"
                             name="folderLimit"
@@ -231,8 +239,6 @@ export class Folder extends React.Component {
                             max="100"
                             onChange={(e) => { BattleChip.setFolderSize(e.target.valueAsNumber); this.setState({ folderLimit: BattleChip.getFolderSize() }); }}
                         />
-                        <br />
-                        <br />
                         <span unselectable="on" className="Chip">Sort By</span><br />
                         <select value={this.state.sortBy} onChange={(e) => { this.sortSelectChanged(e) }} style={{ width: "100%" }} className="browser-default custom-select">
                             <option value="Name">Name</option>
