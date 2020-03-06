@@ -17,7 +17,7 @@ import './Battlechip.css';
 class GroupFolderChip extends React.Component {
     render() {
         if (!this.props.playerName) throw new Error("playerName not set in props");
-        if (!this.props.folderIndex) throw new Error("index not set");
+        if (typeof this.props.folderIndex !== "number") throw new Error("index not set");
 
         /** @type {FolderChipObj} */
         let folderChip = FolderWebSocket.getGroupFolders()[this.props.playerName].Chips[this.props.folderIndex];

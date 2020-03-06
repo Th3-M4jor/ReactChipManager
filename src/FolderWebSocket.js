@@ -100,7 +100,7 @@ export class FolderWebSocket {
      * @returns {boolean} true if you are currently part of a folder group 
      */
     static inFolderGroup() {
-        return FolderWebSocket._socket !== null;
+        return FolderWebSocket._socket !== null && FolderWebSocket._socket.connected;
     }
 
     /**

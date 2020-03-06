@@ -98,16 +98,21 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!FolderWebSocket.inFolderGroup() || FolderWebSocket.groupLength() <= 1) return;
+    if (!FolderWebSocket.inFolderGroup()) return;
+    if(this.state.activeTab === "Folder" || this.state.activeTab === "Pack" || this.state.activeTab === "Library") {
+      return;
+    }
     let badActiveTab = true;
     let folders = FolderWebSocket.getGroupFolders();
+    
     for (const player in folders) {
-      if (this.state.activeTab === "folder_" + player) {
+      
+      if (this.state.activeTab === "Folder_" + player) {
         badActiveTab = false;
       }
     }
     if (badActiveTab) {
-      this.setState({ ActiveTab: "Library" });
+      this.setState({activeTab: "Library"});
     }
   }
 
@@ -161,7 +166,9 @@ class App extends React.Component {
         ));
 
         tabItems.push((
-          <GroupFolder active={this.state.activeTab === "Folder_" + player} playerName={player} />
+          <MDBTabPane tabId={"Folder_" + player} role="tabpanel">
+            <GroupFolder active={this.state.activeTab === "Folder_" + player} playerName={player} />
+          </MDBTabPane>
         ));
       }
     }
