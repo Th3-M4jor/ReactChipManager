@@ -15,19 +15,24 @@ import { FolderWebSocket } from './FolderWebSocket';
 
 
 class App extends React.Component {
-  state = {
-    chipsLoaded: false,
-    activeTab: "Library",
-    updateText: "",
-    modalText: "",
-    modalOpen: false,
-    modalCallback: () => { },
-    folderGroupModalOpen: false,
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      chipsLoaded: false,
+      activeTab: "Library",
+      updateText: "",
+      modalText: "",
+      modalOpen: false,
+      modalCallback: () => { },
+      folderGroupModalOpen: false,
+      useCompressedTabs: false,
+    }
+    this.modificationTimeout = null;
+    this.groupName = "";
+    this.playerName = "";
+    
   }
-
-  modificationTimeout = null;
-  groupName = "";
-  playerName = "";
 
 
   componentDidMount() {
@@ -98,6 +103,15 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
+
+    
+    if(!this.state.useCompressedTabs && FolderWebSocket.groupLength() > 1) {
+      this.setState({useCompressedTabs: true});
+    } else if(this.state.useCompressedTabs && FolderWebSocket.groupLength() <= 1) {
+      this.setState({useCompressedTabs: false});
+    }
+    
+
     if (!FolderWebSocket.inFolderGroup()) return;
     if(this.state.activeTab === "Folder" || this.state.activeTab === "Pack" || this.state.activeTab === "Library") {
       return;
@@ -116,6 +130,18 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * 
+   * @param {string} text 
+   */
+  shrinkName(text) {
+    if(text.length <= 7) {
+      return text;
+    } else {
+      return text.substr(0, 4) + "...";
+    }
+  }
+
   render() {
 
     if (!this.state.chipsLoaded) {
@@ -125,17 +151,17 @@ class App extends React.Component {
     let navLinks = ([
       <MDBNavItem active={this.state.activeTab === "Folder"} className={(this.state.activeTab === "Folder" ? "activeTab" : "inactiveTab") + " nav-tabs"}>
         <MDBNavLink to="#" active={this.state.activeTab === "Folder"} onClick={this.toggle("Folder")} role="tab" className={this.state.activeTab === "Folder" ? "activeTab" : "inactiveTab"}>
-          Folder
+          {this.state.useCompressedTabs ? "Fldr" : "Folder"}
             </MDBNavLink>
       </MDBNavItem>,
       <MDBNavItem active={this.state.activeTab === "Pack"} className={(this.state.activeTab === "Pack" ? "activeTab" : "inactiveTab") + " nav-tabs"}>
         <MDBNavLink to="#" active={this.state.activeTab === "Pack"} onClick={this.toggle("Pack")} role="tab" className={this.state.activeTab === "Pack" ? "activeTab" : "inactiveTab"}>
-          Pack
+        {this.state.useCompressedTabs ? "Pck" : "Pack"}
           </MDBNavLink>
       </MDBNavItem>,
       <MDBNavItem active={this.state.activeTab === "Library"} className={(this.state.activeTab === "Library" ? "activeTab" : "inactiveTab") + " nav-tabs"}>
         <MDBNavLink to="#" active={this.state.activeTab === "Library"} onClick={this.toggle("Library")} role="tab" className={this.state.activeTab === "Library" ? "activeTab" : "inactiveTab"}>
-          Library
+        {this.state.useCompressedTabs ? "Lib" : "Library"}
         </MDBNavLink>
       </MDBNavItem>
     ]);
@@ -160,7 +186,7 @@ class App extends React.Component {
         navLinks.push((
           <MDBNavItem active={this.state.activeTab === "Folder_" + player} className={(this.state.activeTab === "Folder_" + player ? "activeTab" : "inactiveTab") + " nav-tabs"}>
             <MDBNavLink to="#" active={this.state.activeTab === "Folder_" + player} onClick={this.toggle("Folder_" + player)} role="tab" className={this.state.activeTab === "Folder_" + player ? "activeTab" : "inactiveTab"}>
-              {player}
+              {this.shrinkName(player)}
             </MDBNavLink>
           </MDBNavItem>
         ));
@@ -192,7 +218,7 @@ class App extends React.Component {
         </div>
         <Router>
           <div style={{ backgroundColor: "#4abdb5", padding: "10px" }}>
-            <div style={{ paddingLeft: "25px", transform: "translate(0px,8px)" }}>
+            <div style={{ paddingLeft: "20px", transform: "translate(0px,8px)" }}>
               <MDBNav tabs header>
                 {navLinks}
               </MDBNav>
