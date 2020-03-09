@@ -31,6 +31,8 @@ export class FolderWebSocket {
         if(FolderWebSocket._socket !== null) throw new Error("already in a group");
         if(groupName === "") throw new Error("cannot have an empty group name");
         if(playerName === "") throw new Error("cannot have an empty player name");
+        if(playerName.length > 30) throw new Error("Cannot have a player name longer than 30 characters");
+        if(groupName.length > 30) throw new Error("Cannot have a group name longer than 30 characters");
         FolderWebSocket._groupName = groupName;
         FolderWebSocket._playerName = playerName;
         FolderWebSocket._socket = io(serverURL ,{transports: ['websocket', 'polling']});
@@ -42,12 +44,7 @@ export class FolderWebSocket {
               console.log("unknown websocket err occurred");
               alert("An unknown websocket error occurred");
             }
-            FolderWebSocket._socket.close();
-            FolderWebSocket._socket = null;
-            FolderWebSocket._groupName = "";
-            FolderWebSocket._playerName = "";
-            FolderWebSocket._groupFolders = {};
-            FolderWebSocket._FoldersUpdatedCallback({});
+            FolderWebSocket.disconnect();
           });
           
           FolderWebSocket._socket.on('joined', () => {

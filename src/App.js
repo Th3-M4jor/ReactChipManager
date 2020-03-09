@@ -31,7 +31,7 @@ class App extends React.Component {
     this.modificationTimeout = null;
     this.groupName = "";
     this.playerName = "";
-    
+    this.forceUpdateTimeout = null;
   }
 
 
@@ -53,7 +53,15 @@ class App extends React.Component {
   }
 
   FolderWebSocketUpdated() {
-    this.forceUpdate();
+
+    //limit updates via this method to no more than once every 100ms
+    if(this.forceUpdateTimeout !== null) return;
+
+    this.forceUpdateTimeout = setTimeout(() => {
+      this.forceUpdate();
+      this.forceUpdateTimeout = null; 
+    }, 100);
+
   }
 
   /**
