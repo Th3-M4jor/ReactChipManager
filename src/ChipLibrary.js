@@ -267,7 +267,6 @@ export class BattleChip {
         /** @type {string} */
         let text;
         if (BattleChip._FOLDER.length !== 0) {
-            console.log("Folder is not empty");
             text = "Folder: ";
             BattleChip._FOLDER.forEach((chip) => {
                 text += chip.Name;
