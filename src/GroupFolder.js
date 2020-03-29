@@ -21,7 +21,22 @@ class GroupFolderChip extends React.Component {
 
         /** @type {FolderChipObj} */
         let folderChip = FolderWebSocket.getGroupFolders()[this.props.playerName].Chips[this.props.folderIndex];
-        let chip = BattleChip.getChip(folderChip.Name);
+        
+        let chip;
+        
+        try {
+            chip = BattleChip.getChip(folderChip.Name);
+        } catch(e) {
+            if(e.message === "Bad chip name") {
+                alert(`${this.props.playerName} has a chip that does not match one in your library, you may need to refresh your page`);
+                return (
+                    <div/>
+                );
+            }
+            else {
+                throw(e);
+            }
+        }
         let type = "";
         if (folderChip.Used) {
             type = "UsedChip";

@@ -190,7 +190,7 @@ class App extends React.Component {
 
       let folders = FolderWebSocket.getGroupFolders();
       for (let player in folders) {
-        if (player === FolderWebSocket.getPlayerName()) continue;
+        if (player === FolderWebSocket.getPlayerName() || folders[player]?.Chips?.length === 0) continue;
         navLinks.push((
           <MDBNavItem active={this.state.activeTab === "Folder_" + player} className={(this.state.activeTab === "Folder_" + player ? "activeTab" : "inactiveTab") + " nav-tabs"}>
             <MDBNavLink to="#" active={this.state.activeTab === "Folder_" + player} onClick={this.toggle("Folder_" + player)} role="tab" className={this.state.activeTab === "Folder_" + player ? "activeTab" : "inactiveTab"}>
