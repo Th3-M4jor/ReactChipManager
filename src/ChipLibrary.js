@@ -368,7 +368,7 @@ export class BattleChip {
 
                 if (BattleChip._library.has(chip.Name.toLocaleLowerCase())) {
                     BattleChip._FOLDER.push({ Name: chip.Name, Used: chip.Used });
-                    num += chip.Owned;
+                    num += 1;
                 }
                 else {
                     alert(`The chip ${chip.Name} no longer exists in the library, cannot add it to your folder you had it marked as ${chip.Used ? "used" : "unused"}`);
