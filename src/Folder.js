@@ -44,6 +44,9 @@ class FolderChip extends React.Component {
                 case "Mega":
                     type = "Mega";
                     break;
+                case "Support":
+                    type = "SupportChip";
+                    break;
                 case "Standard":
                 default:
                     type = "Chip";

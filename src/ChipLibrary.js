@@ -13,7 +13,7 @@ const URL = "https://spartan364.hopto.org/chips.json";
  * @property {string[]} Skills
  * @property {string} Range
  * @property {string} Damage
- * @property {("Standard"|"Mega"|"Giga")} Type
+ * @property {("Standard"|"Mega"|"Giga"|"Dark"|"Support")} Type
  * @property {string} Hits
  * @property {string} Description
  * @property {string} All
@@ -97,6 +97,7 @@ const chipTypeEnum = {
     Mega: 1,
     Giga: 2,
     Dark: 3,
+    Support: 4,
 }
 
 
