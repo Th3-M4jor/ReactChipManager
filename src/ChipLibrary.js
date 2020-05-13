@@ -97,7 +97,7 @@ const chipTypeEnum = {
     Mega: 1,
     Giga: 2,
     Dark: 3,
-    Support: 4,
+    Support: 0,
 }
 
 
@@ -444,15 +444,12 @@ export class BattleChip {
             this._avgDamage = Math.floor(((+dice[2] / 2) + 0.5) * (+dice[1]));
             this._maxDamage = +dice[2] * +dice[1];
         }
+        
         /**@private 
          * @type {number}
          */
-        this._chipTypeSortPos = null;// = chipTypeEnum[this._type];
-        if (this._type === "Support") {
-            this._chipTypeSortPos = chipTypeEnum.Standard;
-        } else {
-            this._chipTypeSortPos = chipTypeEnum[this._type];
-        }
+        this._chipTypeSortPos = chipTypeEnum[this._type];
+
         /**
          * @private
          * @type {number}
