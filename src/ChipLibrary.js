@@ -447,7 +447,12 @@ export class BattleChip {
         /**@private 
          * @type {number}
          */
-        this._chipTypeSortPos = chipTypeEnum[this._type];
+        this._chipTypeSortPos = null;// = chipTypeEnum[this._type];
+        if (this._type === "Support") {
+            this._chipTypeSortPos = chipTypeEnum.Standard;
+        } else {
+            this._chipTypeSortPos = chipTypeEnum[this._type];
+        }
         /**
          * @private
          * @type {number}

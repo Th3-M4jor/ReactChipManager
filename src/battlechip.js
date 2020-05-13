@@ -28,6 +28,9 @@ export class Packchip extends React.Component {
                 case "Mega":
                     type = "Mega";
                     break;
+                case "Support":
+                    type = "SupportChip";
+                    break;
                 case "Standard":
                 default:
                     type = "Chip";
@@ -122,6 +125,9 @@ export class LibraryChip extends React.Component {
                 break;
             case "Mega":
                 type = "Mega";
+                break;
+            case "Support":
+                type = "SupportChip";
                 break;
             case "Standard":
             default:
