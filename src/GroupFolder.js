@@ -42,15 +42,18 @@ class GroupFolderChip extends React.Component {
             type = "UsedChip";
         } else {
             switch (chip.Type) {
-                case "Giga":
-                    type = "Giga";
+                case "Standard":
+                default:
+                    type = "Chip";
+                    break;
+                case "Support":
+                    type = "SupportChip";
                     break;
                 case "Mega":
                     type = "Mega";
                     break;
-                case "Standard":
-                default:
-                    type = "Chip";
+                case "Giga":
+                    type = "Giga";
                     break;
             }
         }
