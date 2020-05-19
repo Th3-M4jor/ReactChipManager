@@ -38,18 +38,18 @@ class FolderChip extends React.Component {
             type = "UsedChip";
         } else {
             switch (chip.Type) {
-                case "Giga":
-                    type = "Giga";
-                    break;
-                case "Mega":
-                    type = "Mega";
+                case "Standard":
+                default:
+                    type = "Chip";
                     break;
                 case "Support":
                     type = "SupportChip";
                     break;
-                case "Standard":
-                default:
-                    type = "Chip";
+                case "Mega":
+                    type = "Mega";
+                    break;
+                case "Giga":
+                    type = "Giga";
                     break;
             }
         }

@@ -20,20 +20,19 @@ export class Packchip extends React.Component {
         if (chip.Owned <= chip.Used) {
             type = "UsedChip";
         } else {
-
             switch (chip.Type) {
-                case "Giga":
-                    type = "Giga";
-                    break;
-                case "Mega":
-                    type = "Mega";
+                case "Standard":
+                default:
+                    type = "Chip";
                     break;
                 case "Support":
                     type = "SupportChip";
                     break;
-                case "Standard":
-                default:
-                    type = "Chip";
+                case "Mega":
+                    type = "Mega";
+                    break;
+                case "Giga":
+                    type = "Giga";
                     break;
             }
         }
@@ -109,7 +108,7 @@ export class LibraryChip extends React.Component {
     onChipDoubleClick = () => {
         let chip = BattleChip.getChip(this.props.chipName);
         chip.Owned++;
-        this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`); 
+        this.props.msgCallback(`You now own ${chip.Owned} copies of ${chip.Name}`);
     }
 
     render() {
@@ -120,18 +119,18 @@ export class LibraryChip extends React.Component {
         let chip = BattleChip.getChip(this.props.chipName.toLocaleLowerCase());
         let type = "";
         switch (chip.Type) {
-            case "Giga":
-                type = "Giga";
-                break;
-            case "Mega":
-                type = "Mega";
+            case "Standard":
+            default:
+                type = "Chip";
                 break;
             case "Support":
                 type = "SupportChip";
                 break;
-            case "Standard":
-            default:
-                type = "Chip";
+            case "Mega":
+                type = "Mega";
+                break;
+            case "Giga":
+                type = "Giga";
                 break;
         }
         return (
